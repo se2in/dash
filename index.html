@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>유진증권 안상현 센터장의 Morning DashBoard</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b0f14;color:#e6edf3;font-family:Arial,Helvetica,sans-serif}.wrap{max-width:1900px;margin:0 auto;padding:18px}
+h1{margin:0 0 18px 0;font-size:30px;font-weight:800}h2{margin:24px 0 12px 0;font-size:21px;font-weight:800}
+.grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}.grid-4{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px}.layout-2col{display:grid;grid-template-columns:1.25fr 1fr;gap:18px;align-items:start}
+.panel{background:#0f141b;border-radius:14px;padding:14px;box-shadow:0 4px 14px rgba(0,0,0,.22)}.card{background:#151b24;border-radius:14px;padding:16px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.22);cursor:pointer;transition:.15s transform,.15s box-shadow,.15s border-color;border:1px solid #151b24}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 18px rgba(0,0,0,.28);border-color:#2d3a4d}.card.active{border-color:#4d9cff}.card.static{cursor:default}.label{font-size:13px;color:#cdd9e5;margin-bottom:8px}.value{font-size:22px;font-weight:700}.sub{font-size:12px;color:#93a1b2;margin-top:6px}
+.status,.footer,.note{font-size:12px;color:#93a1b2;margin-top:14px;line-height:1.5}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:10px 8px;border-bottom:1px solid #223042;text-align:left;font-size:13px;vertical-align:top}th{color:#9ecbff;font-weight:700}
+.badge{display:inline-block;padding:4px 8px;border-radius:999px;font-size:12px;background:#1d2938;color:#d6e7ff}.tv-box{width:100%;overflow:hidden}.tv-heatmap{height:560px}.tv-calendar{height:560px}.chart-shell{min-height:0;padding:10px 12px 12px 12px}.chart-box{height:430px;width:100%;overflow:hidden;border-radius:12px;background:#0b1017;border:1px solid #1d2735}.chart-box>div,.chart-box iframe,.chart-box .tradingview-widget-container{width:100%!important;height:100%!important}
+.compact-note{margin-top:8px;font-size:11px;color:#7f8ea3}.section-tight{margin-top:18px}.gauge-wrap{padding:12px 0 18px}.gauge-bar{position:relative;height:18px;border-radius:999px;background:linear-gradient(90deg,#8b0000 0%,#d64545 20%,#e99a3b 40%,#888 50%,#6ca96c 65%,#2f8f2f 82%,#006400 100%)}.gauge-marker{position:absolute;top:-8px;width:6px;height:34px;background:#fff;border-radius:4px;box-shadow:0 0 10px rgba(255,255,255,.35)}.gauge-scale{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#93a1b2}.gauge-title{font-size:20px;font-weight:800;margin-bottom:10px}.pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#1c2634;color:#cfe1ff;font-size:12px;margin-right:8px}.smallmuted{font-size:12px;color:#93a1b2}.title-cell{max-width:460px;line-height:1.45}.links{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.btn{display:inline-block;padding:10px 14px;border-radius:10px;text-decoration:none;color:#e6edf3;background:#1b2430;border:1px solid #263140;font-size:14px}.btn:hover{background:#243042}
+.bok-box{position:relative;width:100%;border:1px solid #1d2735;border-radius:12px;overflow:hidden;background:#0b1017;cursor:pointer;box-shadow:0 4px 14px rgba(0,0,0,.22);transition:.2s}
+.bok-box:hover{border-color:#4d9cff;box-shadow:0 8px 18px rgba(0,0,0,.35)}
+.bok-frame{width:100%;height:420px;border:0;background:#fff;display:block}
+.bok-overlay-link{position:absolute;inset:0;z-index:3}
+.bok-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.fedwatch-lines{display:flex;flex-direction:column;gap:6px;margin-top:8px}
+.fedwatch-pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#1c2634;color:#e6edf3;font-size:13px;font-weight:700}
+.nextrade-card{padding:14px 14px 12px 14px;text-align:left}
+.nextrade-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px}.nextrade-title{font-size:13px;color:#cdd9e5;font-weight:700}.nextrade-time{font-size:12px;color:#93a1b2;margin-top:2px}.nextrade-change{font-size:28px;font-weight:800;line-height:1.1;margin-top:8px}.nextrade-meta{margin-top:10px;display:grid;gap:6px}.nextrade-row{display:flex;justify-content:space-between;gap:10px;font-size:12px}.nextrade-row span:first-child{color:#93a1b2}.nextrade-row span:last-child{color:#e6edf3;font-weight:700}.nextrade-subnote{margin-top:8px;font-size:11px;color:#7f8ea3;line-height:1.45}
+.doughcon-card{padding:14px 14px 12px 14px;text-align:left;background:linear-gradient(180deg,rgba(120,74,0,.28),rgba(68,40,0,.36));border:1px solid #7c5a14}
+.doughcon-card:hover{border-color:#f5c542;box-shadow:0 8px 18px rgba(0,0,0,.28)}
+.doughcon-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:10px}.doughcon-icon{font-size:24px;line-height:1}.doughcon-title{font-size:13px;color:#f8e29c;font-weight:700}.doughcon-value{font-size:30px;font-weight:800;line-height:1.05;color:#ffd24d;margin-top:4px}.doughcon-sub{font-size:12px;color:#f1d67a;line-height:1.45;margin-top:8px}.doughcon-note{margin-top:10px;font-size:11px;color:#d7c17d;line-height:1.45}
+
+.boolio-panel{margin-top:18px;padding:0;overflow:hidden}.boolio-shell{display:grid;grid-template-columns:minmax(320px,420px) 1fr;gap:0;background:linear-gradient(135deg,#0f1724 0%,#0c1320 55%,#0a0f17 100%)}.boolio-side{padding:26px;border-right:1px solid #1b2636;background:linear-gradient(180deg,rgba(17,24,35,.98) 0%,rgba(12,17,25,.96) 100%)}.boolio-kicker{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border:1px solid #243246;border-radius:999px;background:rgba(22,30,44,.92);color:#9ecbff;font-size:12px;font-weight:700;letter-spacing:.2px}.boolio-kicker:before{content:"";width:8px;height:8px;border-radius:50%;background:#4d9cff;box-shadow:0 0 14px rgba(77,156,255,.7)}.boolio-title{margin:16px 0 8px 0;font-size:28px;font-weight:800;line-height:1.25;color:#f4f8ff}.boolio-desc{margin:0;color:#aab7c8;font-size:14px;line-height:1.7}.boolio-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}.btn-primary{background:linear-gradient(135deg,#376dff 0%,#4d9cff 100%);border-color:#4d9cff;color:#fff;box-shadow:0 10px 24px rgba(53,104,255,.28)}.btn-primary:hover{background:linear-gradient(135deg,#4b7bff 0%,#65abff 100%)}.boolio-points{display:grid;gap:10px;margin-top:20px;padding:0;list-style:none}.boolio-points li{display:flex;gap:10px;align-items:flex-start;color:#d9e4f2;font-size:13px;line-height:1.55}.boolio-points li:before{content:"✓";display:inline-flex;align-items:center;justify-content:center;flex:0 0 18px;width:18px;height:18px;border-radius:50%;background:#1a2740;color:#7db5ff;font-size:12px;font-weight:800;margin-top:1px}.boolio-mini{margin-top:18px;padding:12px 14px;border:1px solid #1f2c3f;border-radius:12px;background:rgba(8,13,22,.58);color:#7f8ea3;font-size:12px;line-height:1.6}.boolio-stage{position:relative;padding:26px;background:radial-gradient(circle at top right,rgba(77,156,255,.16),transparent 28%),radial-gradient(circle at bottom left,rgba(76,104,255,.14),transparent 24%),linear-gradient(180deg,#0b1017 0%,#0a0f16 100%)}.boolio-preview{position:relative;border:1px solid #1e2a3c;border-radius:18px;overflow:hidden;background:#0c121b;box-shadow:0 16px 40px rgba(0,0,0,.34)}.boolio-preview-top{display:flex;align-items:center;gap:12px;padding:14px 16px;background:#101827;border-bottom:1px solid #1e2a3c}.boolio-preview-dots{display:flex;gap:7px}.boolio-preview-dots span{width:10px;height:10px;border-radius:50%;display:block;background:#33425a}.boolio-preview-address{flex:1;min-width:0;padding:10px 14px;border-radius:999px;border:1px solid #223247;background:#09111d;color:#9ecbff;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.boolio-preview-body{position:relative;min-height:520px;padding:30px;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#0d1420 0%,#0a1018 100%)}.boolio-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px, transparent 1px),linear-gradient(90deg, rgba(255,255,255,.04) 1px, transparent 1px);background-size:26px 26px;mask-image:linear-gradient(180deg,rgba(0,0,0,.95),rgba(0,0,0,.28));pointer-events:none}.boolio-card{position:relative;z-index:1;width:min(720px,100%);padding:34px 30px;border:1px solid rgba(86,121,189,.32);border-radius:22px;background:linear-gradient(180deg,rgba(19,28,42,.93),rgba(11,17,27,.96));box-shadow:0 22px 44px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);text-align:left}.boolio-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;background:rgba(77,156,255,.12);border:1px solid rgba(77,156,255,.28);color:#9ecbff;font-size:12px;font-weight:700}.boolio-card h3{margin:16px 0 10px 0;font-size:30px;line-height:1.25;color:#f5f9ff}.boolio-card p{margin:0;color:#aab7c8;font-size:15px;line-height:1.75}.boolio-card-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}.boolio-chip-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.boolio-chip{padding:8px 12px;border-radius:999px;border:1px solid #253750;background:rgba(10,15,24,.72);color:#cfe1ff;font-size:12px}.boolio-overlay-link{position:absolute;inset:0;z-index:2}.boolio-foot{margin-top:14px;color:#7f8ea3;font-size:11px;line-height:1.6}.embed-note{margin-top:10px;font-size:11px;color:#7f8ea3;line-height:1.55}
+@media (max-width:1450px){.grid-4{grid-template-columns:repeat(2,minmax(180px,1fr))}.layout-2col{grid-template-columns:1fr}.chart-box{height:400px}}
+@media (max-width:760px){.grid-4{grid-template-columns:repeat(2,minmax(140px,1fr))}h1{font-size:24px}h2{font-size:18px}.tv-heatmap,.tv-calendar{height:520px}.chart-box{height:360px}.bok-frame{height:360px}.boolio-preview-body{min-height:380px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>유진증권 안상현 센터장의 Morning DashBoard</h1>
+
+<h2>시장 핵심 지표</h2>
+<div class="grid-cards">
+<div class="card market-card active" data-symbol="FOREXCOM:SPXUSD" data-title="S&P500"><div class="label">S&P500</div><div class="value" id="sp500">-</div><div class="sub" id="sp500_chg">-</div></div>
+<div class="card market-card" data-symbol="VIX" data-title="VIX"><div class="label">VIX</div><div class="value" id="vix">-</div><div class="sub" id="vix_chg">-</div></div>
+<div class="card market-card" data-symbol="XAUUSD" data-title="Gold"><div class="label">Gold</div><div class="value" id="gold">-</div><div class="sub" id="gold_chg">-</div></div>
+<div class="card market-card" data-symbol="WTI1!" data-title="Oil (WTI)"><div class="label">Oil (WTI)</div><div class="value" id="oil">-</div><div class="sub" id="oil_chg">-</div></div>
+<div class="card market-card" data-symbol="BITSTAMP:BTCUSD" data-title="BTC"><div class="label">BTC</div><div class="value" id="btc">-</div><div class="sub" id="btc_chg">-</div></div>
+<div class="card market-card" data-symbol="FX_IDC:USDKRW" data-title="USD/KRW"><div class="label">USD/KRW</div><div class="value" id="usdkrw">-</div><div class="sub" id="usdkrw_chg">-</div></div>
+<div class="card market-card" data-symbol="FRED:T10Y2Y" data-title="미국채 장단기 금리차"><div class="label">10Y-2Y Spread</div><div class="value" id="yield_spread">-</div><div class="sub" id="yield_spread_chg">-</div></div>
+<div class="card market-card" data-symbol="FGI" data-title="Fear & Greed"><div class="label">Fear & Greed</div><div class="value" id="fear_greed">-</div><div class="sub" id="fear_greed_label">-</div></div>
+<div class="card market-card" data-symbol="OPTION" data-title="이번주 옵션만기"><div class="label">이번주 옵션만기</div><div class="value" id="options_expiry">-</div><div class="sub" id="options_note">-</div></div>
+<div class="card market-card" data-symbol="FEDWATCH" data-title="FedWatch"><div class="label">FedWatch</div><div class="fedwatch-lines"><div class="fedwatch-pill" id="fedwatch_hold">동결 -</div><div class="fedwatch-pill" id="fedwatch_hike">변경 -</div></div><div class="sub" id="fedwatch_date">클릭 시 CME FedWatch 열기</div></div>
+<div class="card market-card nextrade-card" data-symbol="NEXTRADE" data-title="NXT 프리마켓">
+  <div class="nextrade-head">
+    <div>
+      <div class="nextrade-title">NXT 프리마켓</div>
+      <div class="nextrade-time" id="nextrade_basis">기준 정보 -</div>
+    </div>
+    <div class="nextrade-time" id="nextrade_session">08:00~08:50</div>
+  </div>
+  <div class="nextrade-change" id="nextrade_change">-</div>
+  <div class="nextrade-meta">
+    <div class="nextrade-row"><span>거래종목 수</span><span id="nextrade_issues">-</span></div>
+    <div class="nextrade-row"><span>거래량(주)</span><span id="nextrade_volume">-</span></div>
+    <div class="nextrade-row"><span>거래대금(원)</span><span id="nextrade_value">-</span></div>
+  </div>
+  <div class="nextrade-subnote" id="nextrade_note">클릭 시 넥스트레이드 열기</div>
+</div>
+<div class="card market-card doughcon-card" data-symbol="DOUGHCON" data-title="DOUGHCON">
+  <div class="doughcon-head">
+    <div>
+      <div class="doughcon-title">PizzINT / DOUGHCON</div>
+      <div class="doughcon-value" id="doughcon_level">DOUGHCON -</div>
+    </div>
+    <div class="doughcon-icon">🍕</div>
+  </div>
+  <div class="doughcon-sub" id="doughcon_location">ROUND HOUSE</div>
+  <div class="doughcon-sub" id="doughcon_status">INCREASE IN FORCE READINESS</div>
+  <div class="doughcon-note" id="doughcon_note">클릭 시 PizzINT 열기</div>
+</div>
+</div>
+
+<h2 id="chart_section_title">선택 차트</h2>
+<div class="panel chart-shell">
+<div id="chart_host" class="chart-box"></div>
+<div class="compact-note">카드를 클릭하면 아래 차트가 바뀝니다. Fear &amp; Greed는 차트 대신 감성 게이지를 표시합니다.</div>
+</div>
+
+<h2>매크로 체크포인트</h2>
+<div class="grid-4">
+<div class="card static"><div class="label">CPI YoY</div><div class="value" id="cpi_yoy">-</div><div class="sub" id="cpi_date">-</div></div>
+<div class="card static"><div class="label">NFP MoM</div><div class="value" id="nfp_mom">-</div><div class="sub" id="nfp_date">-</div></div>
+<div class="card static"><div class="label">Next CPI Release</div><div class="value" id="next_cpi">-</div><div class="sub">BLS schedule</div></div>
+<div class="card static"><div class="label">Next NFP Release</div><div class="value" id="next_nfp">-</div><div class="sub">BLS schedule</div></div>
+</div>
+
+<div class="layout-2col section-tight">
+<div>
+<h2>US Market Heatmap</h2>
+<div class="panel"><div class="tv-box tv-heatmap tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/heatmap/stock/" rel="noopener nofollow" target="_blank"><span style="color:#9ecbff;">Stock Heatmap</span></a><span style="color:#93a1b2;"> by TradingView</span></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-stock-heatmap.js" async>{"dataSource":"SPX500","grouping":"sector","blockSize":"market_cap_basic","blockColor":"change","locale":"kr","symbolUrl":"","colorTheme":"dark","hasTopBar":true,"isDataSetEnabled":true,"isZoomEnabled":true,"hasSymbolTooltip":true,"isMonoSize":false,"width":"100%","height":"560"}</script></div></div>
+</div>
+<div>
+<h2>이번주 주요 일정</h2>
+<div class="panel"><div class="tv-box tv-calendar tradingview-widget-container"><div class="tradingview-widget-container__widget"></div><div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/economic-calendar/" rel="noopener nofollow" target="_blank"><span style="color:#9ecbff;">Economic Calendar</span></a><span style="color:#93a1b2;"> by TradingView</span></div><script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>{"colorTheme":"dark","isTransparent":false,"width":"100%","height":"560","locale":"kr","importanceFilter":"1","countryFilter":"us"}</script></div></div>
+</div>
+</div>
+
+<h2>이번주 주요 기업 실적 발표</h2>
+<div class="panel"><div class="table-wrap"><table><thead><tr><th>날짜</th><th>심볼</th><th>회사명</th><th>EPS 예상</th><th>발표시간</th></tr></thead><tbody id="earnings_body"><tr><td colspan="5">데이터 없음</td></tr></tbody></table></div></div>
+
+<h2>FnGuide 요약리포트</h2>
+<div class="panel">
+<div class="links" style="margin-bottom:12px;">
+<a class="btn" id="fnguide_link" href="https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701" target="_blank" rel="noopener noreferrer">FnGuide 원문 열기</a>
+</div>
+<div class="note" style="margin-top:6px;margin-bottom:12px;">크롤링이 실패하더라도 위 버튼으로 FnGuide 원문 페이지를 바로 열 수 있습니다.</div>
+<div class="table-wrap"><table><thead><tr><th>일자</th><th>리포트 요약</th><th>투자의견</th><th>목표주가</th><th>전일종가</th><th>제공처/작성자</th></tr></thead><tbody id="fnguide_body"><tr><td colspan="6">데이터 없음</td></tr></tbody></table></div>
+</div>
+
+<h2>한국은행 뉴스심리지수</h2>
+<div class="panel">
+  <div class="bok-actions">
+    <a class="btn" href="https://snapshot.bok.or.kr/dashboard/C8" target="_blank" rel="noopener noreferrer">한국은행 뉴스심리지수 원문 열기</a>
+  </div>
+  <div class="note" style="margin-top:0;margin-bottom:12px;">아래 화면을 클릭하면 한국은행 금융경제 스냅샷 C8 페이지로 이동합니다.</div>
+  <div class="bok-box" onclick="window.open('https://snapshot.bok.or.kr/dashboard/C8','_blank')">
+    <iframe class="bok-frame" src="https://snapshot.bok.or.kr/dashboard/C8" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <a class="bok-overlay-link" href="https://snapshot.bok.or.kr/dashboard/C8" target="_blank" rel="noopener noreferrer" aria-label="한국은행 뉴스심리지수 원문 열기"></a>
+  </div>
+</div>
+
+<h2>FRED 금리 구조 차트</h2>
+<div class="panel">
+<div class="note" style="margin-top:0;margin-bottom:12px;">실질금리, 명목금리, 기대 인플레이션을 함께 볼 수 있도록 FRED 차트를 추가했습니다.</div>
+
+<div class="links" style="margin-bottom:12px;">
+<a class="btn" href="https://fred.stlouisfed.org/series/DFII10" target="_blank" rel="noopener noreferrer">실질금리 원문</a>
+<a class="btn" href="https://fred.stlouisfed.org/series/DGS10" target="_blank" rel="noopener noreferrer">명목금리 원문</a>
+<a class="btn" href="https://fred.stlouisfed.org/series/T10YIE" target="_blank" rel="noopener noreferrer">기대 인플레이션 원문</a>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px;">
+  <div>
+    <div style="margin-bottom:8px;color:#9ecbff;font-weight:700;">실질금리 (DFII10)</div>
+    <iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1CH8m&width=100%&height=280" width="100%" height="280" frameborder="0" style="border:1px solid #223042;border-radius:10px;background:#fff;"></iframe>
+  </div>
+  <div>
+    <div style="margin-bottom:8px;color:#9ecbff;font-weight:700;">명목금리 (DGS10)</div>
+    <iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1CH8r&width=100%&height=280" width="100%" height="280" frameborder="0" style="border:1px solid #223042;border-radius:10px;background:#fff;"></iframe>
+  </div>
+  <div>
+    <div style="margin-bottom:8px;color:#9ecbff;font-weight:700;">기대 인플레이션 (T10YIE)</div>
+    <iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1CH8t&width=100%&height=280" width="100%" height="280" frameborder="0" style="border:1px solid #223042;border-radius:10px;background:#fff;"></iframe>
+  </div>
+</div>
+</div>
+
+
+<h2>Boolio AI Analyst 바로가기</h2>
+<div class="panel boolio-panel">
+  <div class="boolio-shell">
+    <div class="boolio-side">
+      <div class="boolio-kicker">AI Analyst Workspace</div>
+      <div class="boolio-title">Boolio 로그인 허브</div>
+      <p class="boolio-desc">대시보드에서 바로 Boolio AI Analyst로 이동할 수 있도록 정리했습니다. 임베드는 일부 환경에서 차단될 수 있어, 실제 사용은 새 창 로그인 방식이 가장 안정적입니다.</p>
+      <div class="boolio-actions">
+        <a class="btn btn-primary" href="https://eugene.chat.boolio.ai" target="_blank" rel="noopener noreferrer">Boolio 로그인 열기</a>
+        <a class="btn" href="https://eugene.chat.boolio.ai" target="_blank" rel="noopener noreferrer">새 탭으로 바로가기</a>
+      </div>
+      <ul class="boolio-points">
+        <li>기존 에러 URL은 제거하고 Auth0 로그인 링크로 교체했습니다.</li>
+        <li>빈 iframe 대신 시각적인 프리뷰 카드로 바꿔 대시보드 톤과 맞췄습니다.</li>
+        <li>오른쪽 전체 영역을 클릭해도 새 창에서 로그인 페이지가 열립니다.</li>
+      </ul>
+      <div class="boolio-mini">권장 사용 방식: 왼쪽 버튼 또는 오른쪽 프리뷰 카드를 클릭해 Boolio 로그인 페이지로 이동 → 로그인 후 분석 화면 사용</div>
+    </div>
+    <div class="boolio-stage">
+      <div class="boolio-preview">
+        <div class="boolio-preview-top">
+          <div class="boolio-preview-dots"><span></span><span></span><span></span></div>
+          <div class="boolio-preview-address">https://eugene.chat.boolio.ai</div>
+        </div>
+        <div class="boolio-preview-body">
+          <div class="boolio-grid"></div>
+          <div class="boolio-card">
+            <div class="boolio-badge">Secure Sign In</div>
+            <h3>Boolio AI Analyst에 빠르게 접속</h3>
+            <p>로그인 전용 페이지는 브라우저 보안 정책으로 대시보드 안에서 직접 표시되지 않을 수 있습니다. 대신 깔끔한 접속 패널로 구성해, 한 번의 클릭으로 Boolio 로그인 화면으로 이동하도록 정리했습니다.</p>
+            <div class="boolio-chip-row">
+              <div class="boolio-chip">Auth0 Login</div>
+              <div class="boolio-chip">New Tab Launch</div>
+              <div class="boolio-chip">Dashboard Friendly</div>
+            </div>
+            <div class="boolio-card-actions">
+              <a class="btn btn-primary" href="https://eugene.chat.boolio.ai" target="_blank" rel="noopener noreferrer">지금 로그인</a>
+              <a class="btn" href="https://eugene.chat.boolio.ai" target="_blank" rel="noopener noreferrer">링크 열기</a>
+            </div>
+          </div>
+        </div>
+        <a class="boolio-overlay-link" href="https://eugene.chat.boolio.ai" target="_blank" rel="noopener noreferrer" aria-label="Boolio 로그인 페이지 열기"></a>
+      </div>
+      <div class="boolio-foot">보안 정책상 로그인 페이지 iframe 표시는 막힐 수 있으므로, 실제 진입은 새 탭 이동 방식으로 처리했습니다.</div>
+    </div>
+  </div>
+</div>
+
+<div class="status" id="lastUpdated">마지막 업데이트: -</div>
+</div>
+
+<script src="data.js"></script>
+<script>
+(function(){
+const d=window.dashboardData||{};
+function set(id,v){const el=document.getElementById(id);if(el)el.innerText=(v??"-");}
+["sp500","sp500_chg","vix","vix_chg","gold","gold_chg","oil","oil_chg","btc","btc_chg","usdkrw","usdkrw_chg","yield_spread","yield_spread_chg","fear_greed","fear_greed_label","options_expiry","options_note","cpi_yoy","cpi_date","nfp_mom","nfp_date","next_cpi","next_nfp","fedwatch_hold","fedwatch_hike","fedwatch_date","nextrade_basis","nextrade_session","nextrade_change","nextrade_issues","nextrade_volume","nextrade_value","nextrade_note","doughcon_level","doughcon_location","doughcon_status","doughcon_note"].forEach(k=>set(k,d[k]));
+if (d.fnguide_url && document.getElementById("fnguide_link")) document.getElementById("fnguide_link").href = d.fnguide_url;
+if (!d.fedwatch_hold) document.getElementById("fedwatch_hold").innerText = "동결 -";
+if (!d.fedwatch_hike) document.getElementById("fedwatch_hike").innerText = "변경 -";
+if (!d.fedwatch_date) document.getElementById("fedwatch_date").innerText = "클릭 시 CME FedWatch 열기";
+if (!d.nextrade_basis) document.getElementById("nextrade_basis").innerText = "기준 정보 -";
+if (!d.nextrade_session) document.getElementById("nextrade_session").innerText = "08:00~08:50";
+if (!d.nextrade_note) document.getElementById("nextrade_note").innerText = "클릭 시 넥스트레이드 열기";
+if (!d.doughcon_level) document.getElementById("doughcon_level").innerText = "DOUGHCON -";
+if (!d.doughcon_location) document.getElementById("doughcon_location").innerText = "ROUND HOUSE";
+if (!d.doughcon_status) document.getElementById("doughcon_status").innerText = "INCREASE IN FORCE READINESS";
+if (!d.doughcon_note) document.getElementById("doughcon_note").innerText = "클릭 시 PizzINT 열기";
+set("lastUpdated","마지막 업데이트: "+(d.updated_at||"-"));
+
+const body=document.getElementById("earnings_body");
+const rows=Array.isArray(d.earnings)?d.earnings:[];
+body.innerHTML=rows.length?"":'<tr><td colspan="5">이번주 실적 데이터를 불러오지 못했습니다.</td></tr>';
+rows.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${r.date||"-"}</td><td><span class="badge">${r.symbol||"-"}</span></td><td>${r.company||"-"}</td><td>${r.eps_estimate||"-"}</td><td>${r.time||"-"}</td>`;body.appendChild(tr);});
+
+const fgBody=document.getElementById("fnguide_body");
+const fgRows=Array.isArray(d.fnguide_reports)?d.fnguide_reports:[];
+fgBody.innerHTML=fgRows.length?"":'<tr><td colspan="6">FnGuide 요약리포트를 불러오지 못했습니다. 위 버튼으로 원문을 바로 열어 확인하세요.</td></tr>';
+fgRows.forEach(r=>{const tr=document.createElement("tr");tr.innerHTML=`<td>${r.date||"-"}</td><td class="title-cell">${r.title||"-"}</td><td>${r.opinion||"-"}</td><td>${r.target_price||"-"}</td><td>${r.close_price||"-"}</td><td>${r.author||"-"}</td>`;fgBody.appendChild(tr);});
+
+const cards=Array.from(document.querySelectorAll(".market-card"));
+const host=document.getElementById("chart_host");
+const title=document.getElementById("chart_section_title");
+
+function sentimentLabel(score){score=Number(score);if(Number.isNaN(score))return "-";if(score<=24)return "Extreme Fear";if(score<=44)return "Fear";if(score<=55)return "Neutral";if(score<=75)return "Greed";return "Extreme Greed";}
+function renderGauge(){const score=Number(d.fear_greed);const label=d.fear_greed_label&&d.fear_greed_label!=="-"?d.fear_greed_label:sentimentLabel(score);title.innerText="Fear & Greed 게이지";const markerLeft=Number.isNaN(score)?50:Math.max(0,Math.min(100,score));host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${Number.isNaN(score)?"-":score} <span class="pill">${label||"-"}</span></div><div class="smallmuted">0~24 Extreme Fear / 25~44 Fear / 45~55 Neutral / 56~75 Greed / 76~100 Extreme Greed</div><div style="margin-top:18px" class="gauge-bar"><div class="gauge-marker" style="left: calc(${markerLeft}% - 3px);"></div></div><div class="gauge-scale"><span>0</span><span>25</span><span>50</span><span>75</span><span>100</span></div></div>`;host.style.height="430px";}
+function renderOptionInfo(){title.innerText="이번주 옵션만기";host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${d.options_expiry||"-"}</div><div class="pill">${d.options_note||"-"}</div><div class="note">주간 만기는 이번 주 금요일 기준으로 계산했고, 셋째 금요일이면 월간 만기로 표시했습니다.</div></div>`;host.style.height="430px";}
+function renderNextradeInfo(){title.innerText="NXT 프리마켓 요약";host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${d.nextrade_change||"-"} <span class="pill">${d.nextrade_session||"08:00~08:50"}</span></div><div class="smallmuted">${d.nextrade_basis||"기준 정보 -"}</div><div style="margin-top:18px" class="table-wrap"><table><tbody><tr><th style="width:180px">거래종목 수</th><td>${d.nextrade_issues||"-"}</td></tr><tr><th>거래량(주)</th><td>${d.nextrade_volume||"-"}</td></tr><tr><th>거래대금(원)</th><td>${d.nextrade_value||"-"}</td></tr></tbody></table></div><div class="note">${d.nextrade_note||"클릭 시 넥스트레이드 열기"}</div></div>`;host.style.height="430px";}
+function renderDoughconInfo(){title.innerText="PizzINT / DOUGHCON";host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${d.doughcon_level||"DOUGHCON -"} <span class="pill">${d.doughcon_location||"ROUND HOUSE"}</span></div><div class="smallmuted">${d.doughcon_status||"INCREASE IN FORCE READINESS"}</div><div class="note" style="margin-top:18px">${d.doughcon_note||"클릭 시 PizzINT 열기"}</div><div class="links"><a class="btn" href="https://www.pizzint.watch/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">PizzINT 열기</a></div></div>`;host.style.height="430px";}
+function renderTV(symbol,name){title.innerText=name+" 차트";host.innerHTML='<div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget"></div></div>';host.style.height="430px";const container=host.querySelector(".tradingview-widget-container");const script=document.createElement("script");script.type="text/javascript";script.async=true;script.src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";script.text=JSON.stringify({autosize:true,symbol:symbol,interval:"D",timezone:"Asia/Seoul",theme:"dark",style:"1",locale:"kr",allow_symbol_change:true,calendar:false,hide_side_toolbar:false,support_host:"https://www.tradingview.com"});container.appendChild(script);}
+function activate(card){cards.forEach(c=>c.classList.remove("active"));card.classList.add("active");const symbol=card.dataset.symbol;const name=card.dataset.title||"차트";if(symbol==="FGI")renderGauge();else if(symbol==="OPTION")renderOptionInfo();else if(symbol==="NEXTRADE"){renderNextradeInfo();window.open('https://www.nextrade.co.kr/main.do','_blank');}else if(symbol==="FEDWATCH"){window.open('https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html','_blank');}else if(symbol==="DOUGHCON"){renderDoughconInfo();window.open('https://www.pizzint.watch/?utm_source=chatgpt.com','_blank');}else renderTV(symbol,name);}
+cards.forEach(card=>card.addEventListener("click",()=>activate(card)));if(cards.length)activate(cards[0]);
+})();
+</script>
+</body></html>
