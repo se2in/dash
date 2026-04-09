@@ -1,20 +1,20 @@
 window.dashboardData = {
-  "sp500": "NA",
-  "sp500_chg": "-",
-  "vix": "NA",
-  "vix_chg": "-",
-  "gold": "NA",
-  "gold_chg": "-",
-  "oil": "NA",
-  "oil_chg": "-",
-  "btc": "NA",
-  "btc_chg": "-",
-  "usdkrw": "NA",
-  "usdkrw_chg": "-",
+  "sp500": "nan",
+  "sp500_chg": "nan% vs prev close",
+  "vix": "21.04",
+  "vix_chg": "-18.39% vs prev close",
+  "gold": "4,749.50",
+  "gold_chg": "+1.98% vs prev close",
+  "oil": "94.41",
+  "oil_chg": "-16.41% vs prev close",
+  "btc": "70,979.91",
+  "btc_chg": "-1.34% vs prev close",
+  "usdkrw": "1,481.78",
+  "usdkrw_chg": "-1.16% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "-",
-  "fear_greed_label": "unavailable",
+  "fear_greed": "31",
+  "fear_greed_label": "fear",
   "options_expiry": "2026-04-10",
   "options_note": "주간 만기",
   "cpi_yoy": "-",
@@ -23,13 +23,13 @@ window.dashboardData = {
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "기준 정보 -",
+  "nextrade_basis": "2026-04-09\n13:02\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
-  "nextrade_change": "-",
-  "nextrade_issues": "-",
-  "nextrade_volume": "-",
-  "nextrade_value": "-",
-  "nextrade_note": "클릭 시 넥스트레이드 열기",
+  "nextrade_change": "-0.49%",
+  "nextrade_issues": "642",
+  "nextrade_volume": "72,772,012",
+  "nextrade_value": "6,361,946,181,060",
+  "nextrade_note": "* 등락률은 기준시점 대비 시가총액의 증감률임",
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
   "fedwatch_date": "클릭 시 CME FedWatch 열기",
@@ -37,8 +37,58 @@ window.dashboardData = {
   "doughcon_location": "ROUND HOUSE",
   "doughcon_status": "INCREASE IN FORCE READINESS",
   "doughcon_note": "클릭 시 PizzINT 열기",
-  "earnings": [],
+  "earnings": [
+    {
+      "date": "2026-04-13",
+      "symbol": "GS",
+      "company": "Goldman Sachs Group, Inc. (The)",
+      "eps_estimate": "16.15",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-04-14",
+      "symbol": "C",
+      "company": "Citigroup, Inc.",
+      "eps_estimate": "2.61",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-04-14",
+      "symbol": "JNJ",
+      "company": "Johnson & Johnson",
+      "eps_estimate": "2.67",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-04-14",
+      "symbol": "JPM",
+      "company": "JP Morgan Chase & Co.",
+      "eps_estimate": "5.44",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-04-15",
+      "symbol": "BAC",
+      "company": "Bank of America Corporation",
+      "eps_estimate": "1.01",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-04-16",
+      "symbol": "NFLX",
+      "company": "Netflix, Inc.",
+      "eps_estimate": "0.76",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-04-16",
+      "symbol": "TSM",
+      "company": "Taiwan Semiconductor Manufactur",
+      "eps_estimate": "3.3",
+      "time": "BMO"
+    }
+  ],
   "fnguide_reports": [],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-09 12:59:55"
+  "updated_at": "2026-04-09 13:03:59"
 };
