@@ -1,20 +1,20 @@
 window.dashboardData = {
-  "sp500": "6,886.24",
-  "sp500_chg": "+1.02% vs prev close",
-  "vix": "18.72",
-  "vix_chg": "-2.09% vs prev close",
-  "gold": "4,802.70",
-  "gold_chg": "+1.27% vs prev close",
-  "oil": "96.84",
-  "oil_chg": "-2.26% vs prev close",
-  "btc": "74,545.65",
-  "btc_chg": "+0.08% vs prev close",
-  "usdkrw": "1,472.78",
-  "usdkrw_chg": "-0.63% vs prev close",
+  "sp500": "6,967.38",
+  "sp500_chg": "+1.18% vs prev close",
+  "vix": "18.36",
+  "vix_chg": "-3.97% vs prev close",
+  "gold": "4,862.00",
+  "gold_chg": "+2.52% vs prev close",
+  "oil": "91.70",
+  "oil_chg": "-7.45% vs prev close",
+  "btc": "74,074.50",
+  "btc_chg": "-0.55% vs prev close",
+  "usdkrw": "1,476.84",
+  "usdkrw_chg": "-0.36% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "42",
-  "fear_greed_label": "fear",
+  "fear_greed": "47",
+  "fear_greed_label": "neutral",
   "options_expiry": "2026-04-17",
   "options_note": "월간 만기",
   "cpi_yoy": "-",
@@ -23,12 +23,12 @@ window.dashboardData = {
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-04-14\n17:28\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-04-15\n08:02\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
-  "nextrade_change": "+2.91%",
-  "nextrade_issues": "642",
-  "nextrade_volume": "68,631,948",
-  "nextrade_value": "5,219,525,077,490",
+  "nextrade_change": "+2.73%",
+  "nextrade_issues": "563",
+  "nextrade_volume": "8,929,841",
+  "nextrade_value": "871,609,271,900",
   "nextrade_note": "* 등락률은 기준시점 대비 시가총액의 증감률임",
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
@@ -38,27 +38,6 @@ window.dashboardData = {
   "doughcon_status": "ELEVATED WATCH",
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
-    {
-      "date": "2026-04-14",
-      "symbol": "C",
-      "company": "Citigroup, Inc.",
-      "eps_estimate": "2.63",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-04-14",
-      "symbol": "JNJ",
-      "company": "Johnson & Johnson",
-      "eps_estimate": "2.68",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-04-14",
-      "symbol": "JPM",
-      "company": "JP Morgan Chase & Co.",
-      "eps_estimate": "5.51",
-      "time": "BMO"
-    },
     {
       "date": "2026-04-15",
       "symbol": "BAC",
@@ -86,9 +65,16 @@ window.dashboardData = {
       "company": "UnitedHealth Group Incorporated",
       "eps_estimate": "6.68",
       "time": "BMO"
+    },
+    {
+      "date": "2026-04-22",
+      "symbol": "TSLA",
+      "company": "Tesla, Inc.",
+      "eps_estimate": "0.38",
+      "time": "AMC"
     }
   ],
   "fnguide_reports": [],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-14 17:29:36"
+  "updated_at": "2026-04-15 08:04:18"
 };
