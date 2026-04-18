@@ -7,8 +7,8 @@ window.dashboardData = {
   "gold_chg": "+1.34% vs prev close",
   "oil": "84.00",
   "oil_chg": "-11.29% vs prev close",
-  "btc": "77,475.00",
-  "btc_chg": "+3.09% vs prev close",
+  "btc": "77,191.63",
+  "btc_chg": "+2.71% vs prev close",
   "usdkrw": "1,465.68",
   "usdkrw_chg": "-0.57% vs prev close",
   "yield_spread": "-",
@@ -23,7 +23,7 @@ window.dashboardData = {
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-04-18\n06:30\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-04-18\n12:37\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "0.00%",
   "nextrade_issues": "0",
@@ -62,5 +62,5 @@ window.dashboardData = {
   ],
   "fnguide_reports": [],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-18 06:31:25"
+  "updated_at": "2026-04-18 12:38:32"
 };
