@@ -397,54 +397,122 @@ def fetch_doughcon_status():
 
 
 
-def fetch_ystreet_tracker_meta():
-    """
-    YStreet ETF Tracker 하단 섹션용 메타 정보.
-    실제 화면은 index.html의 iframe으로 최신 페이지를 직접 보여준다.
-    """
-    return {
+
+def clean_text(s):
+    return re.sub(r"\s+", " ", str(s or "")).strip()
+
+
+def fetch_ystreet_tracker_data():
+    url = "https://ystreet.co.kr/etf-tracker/"
+    html = requests.get(url, headers=HEADERS, timeout=25).text
+    soup = BeautifulSoup(html, "html.parser")
+
+    result = {
         "ystreet_title": "YStreet ETF Tracker",
-        "ystreet_url": "https://ystreet.co.kr/etf-tracker/",
-        "ystreet_note": "아래 화면은 YStreet ETF Tracker 실시간 페이지입니다. 클릭하면 원문 페이지가 새 창으로 열립니다.",
+        "ystreet_url": url,
+        "ystreet_note": "YStreet ETF Tracker 주요 지표를 반영했습니다.",
+        "ystreet_market_buy": "-",
+        "ystreet_market_sell": "-",
+        "ystreet_market_buy_label": "매수 우위",
+        "ystreet_market_sell_label": "매도 우위",
+        "ystreet_activity": "-",
+        "ystreet_activity_label": "활동성 비율",
+        "ystreet_activity_note": "※ 전체 ETF 중 종목이 변동된 ETF 비율",
+        "ystreet_top_returns": [],
+        "ystreet_buy_top10": [],
+        "ystreet_sell_top10": [],
     }
 
-def fetch_fnguide_report_summary(url=FN_GUIDE_URL, limit=8):
-    html = requests.get(
-        url,
-        headers={"User-Agent": "Mozilla/5.0", "Referer": "https://comp.fnguide.com/"},
-        timeout=20,
-    ).text
-    tables = pd.read_html(StringIO(html))
-    target = None
-    for tbl in tables:
-        cols = [str(c).strip() for c in tbl.columns]
-        joined = " | ".join(cols)
-        if ("일자" in joined or "날짜" in joined) and ("투자의견" in joined) and ("목표주가" in joined):
-            target = tbl.copy()
+    market_card = None
+    for h6 in soup.find_all(["h6", "h5", "h4"]):
+        if clean_text(h6.get_text()) == "당일 시장 통계":
+            market_card = h6.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root"))
             break
-    if target is None:
-        return []
-    target.columns = [str(c).strip() for c in target.columns]
+    if market_card:
+        percents = [clean_text(x.get_text()) for x in market_card.find_all(["h6", "h5", "h4"]) if re.search(r"\d+(?:\.\d+)?%", clean_text(x.get_text()))]
+        labels = [clean_text(x.get_text()) for x in market_card.find_all("span")]
+        if percents:
+            result["ystreet_market_buy"] = percents[0]
+        if len(percents) > 1:
+            result["ystreet_market_sell"] = percents[1]
+        label_hits = [x for x in labels if "우위" in x]
+        if label_hits:
+            result["ystreet_market_buy_label"] = label_hits[0]
+        if len(label_hits) > 1:
+            result["ystreet_market_sell_label"] = label_hits[1]
 
-    def pick(row, candidates):
-        for c in candidates:
-            if c in row.index:
-                return str(row.get(c, "-"))
-        return "-"
+    activity_card = None
+    for h6 in soup.find_all(["h6", "h5", "h4"]):
+        if "ETF 활동성 지수" in clean_text(h6.get_text()):
+            activity_card = h6.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root"))
+            break
+    if activity_card:
+        percents = [clean_text(x.get_text()) for x in activity_card.find_all(["h3", "h4", "h5", "h6"]) if re.search(r"\d+(?:\.\d+)?%", clean_text(x.get_text()))]
+        spans = [clean_text(x.get_text()) for x in activity_card.find_all("span")]
+        if percents:
+            result["ystreet_activity"] = percents[0]
+        for s in spans:
+            if "활동성 비율" in s:
+                result["ystreet_activity_label"] = s
+            elif "전체 ETF 중" in s:
+                result["ystreet_activity_note"] = s
 
-    rows = []
-    for _, row in target.head(limit).iterrows():
-        rows.append(
-            {
-                "date": pick(row, ["일자", "날짜"]),
-                "title": pick(row, ["종목명 - 리포트 요약", "종목명-리포트 요약", "리포트 요약", "제목"]),
-                "opinion": pick(row, ["투자의견"]),
-                "target_price": pick(row, ["목표주가"]),
-                "close_price": pick(row, ["전일종가"]),
-                "author": pick(row, ["제공처/작성자", "작성자"]),
-            }
-        )
-    return rows
+    def split_name_code(left):
+        left = clean_text(left)
+        m = re.match(r"(.+?)\s+(\d{6}|\d{5}[A-Z0-9]|\d{4}[A-Z0-9]{2})$", left)
+        if m:
+            return clean_text(m.group(1)), m.group(2)
+        return left, ""
+
+    def parse_two_col_table(table):
+        rows = []
+        if not table:
+            return rows
+        tbody = table.find("tbody") or table
+        for tr in tbody.find_all("tr"):
+            tds = tr.find_all("td")
+            if len(tds) < 2:
+                continue
+            left = clean_text(tds[0].get_text(" ", strip=True))
+            right = clean_text(tds[1].get_text(" ", strip=True))
+            name, code = split_name_code(left)
+            rows.append({"name": name, "code": code, "value": right})
+        return rows
+
+    def parse_three_col_table(table):
+        rows = []
+        if not table:
+            return rows
+        tbody = table.find("tbody") or table
+        for tr in tbody.find_all("tr"):
+            tds = tr.find_all("td")
+            if len(tds) < 3:
+                continue
+            left = clean_text(tds[0].get_text(" ", strip=True))
+            amt = clean_text(tds[1].get_text(" ", strip=True))
+            etf_count = clean_text(tds[2].get_text(" ", strip=True))
+            name, code = split_name_code(left)
+            rows.append({"name": name, "code": code, "amount": amt, "etf_count": etf_count})
+        return rows
+
+    returns_card = None
+    for h6 in soup.find_all(["h6", "h5", "h4"]):
+        if "기간별 수익률 상위 ETF" in clean_text(h6.get_text()):
+            returns_card = h6.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root"))
+            break
+    if returns_card:
+        result["ystreet_top_returns"] = parse_two_col_table(returns_card.find("table"))
+
+    buy_table = None
+    sell_table = None
+    all_tables = soup.find_all('table')
+    three_col_tables = [t for t in all_tables if len((t.find('thead') or t).find_all('th')) >= 3]
+    if len(three_col_tables) >= 2:
+        buy_table = three_col_tables[-2]
+        sell_table = three_col_tables[-1]
+    result["ystreet_buy_top10"] = parse_three_col_table(buy_table)
+    result["ystreet_sell_top10"] = parse_three_col_table(sell_table)
+    return result
 
 
 data = {}
@@ -517,11 +585,11 @@ except Exception:
     data["fnguide_reports"] = []
 
 try:
-    data.update(fetch_ystreet_tracker_meta())
+    data.update(fetch_ystreet_tracker_data())
 except Exception:
     data["ystreet_title"] = "YStreet ETF Tracker"
     data["ystreet_url"] = "https://ystreet.co.kr/etf-tracker/"
-    data["ystreet_note"] = "YStreet ETF Tracker 원문 페이지를 열어 확인하세요."
+    data["ystreet_note"] = "YStreet ETF Tracker 주요 지표를 반영했습니다."
 
 data["fnguide_url"] = FN_GUIDE_URL
 data["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
