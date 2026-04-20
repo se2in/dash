@@ -7,10 +7,10 @@ window.dashboardData = {
   "gold_chg": "+1.51% vs prev close",
   "oil": "83.85",
   "oil_chg": "-11.45% vs prev close",
-  "btc": "74,311.68",
-  "btc_chg": "-1.87% vs prev close",
-  "usdkrw": "1,474.48",
-  "usdkrw_chg": "-0.23% vs prev close",
+  "btc": "75,468.82",
+  "btc_chg": "+2.18% vs prev close",
+  "usdkrw": "1,476.38",
+  "usdkrw_chg": "-0.10% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
   "fear_greed": "68",
@@ -23,7 +23,7 @@ window.dashboardData = {
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-04-20\n14:12\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-04-20\n16:25\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "+0.32%",
   "nextrade_issues": "637",
@@ -33,9 +33,9 @@ window.dashboardData = {
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
   "fedwatch_date": "클릭 시 CME FedWatch 열기",
-  "doughcon_level": "DOUGHCON 4",
+  "doughcon_level": "DOUGHCON 3",
   "doughcon_location": "ROUND HOUSE",
-  "doughcon_status": "ELEVATED WATCH",
+  "doughcon_status": "INCREASE IN FORCE READINESS",
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
     {
@@ -75,5 +75,5 @@ window.dashboardData = {
   "ystreet_buy_top10": [],
   "ystreet_sell_top10": [],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-20 14:14:34"
+  "updated_at": "2026-04-20 16:27:04"
 };
