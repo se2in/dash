@@ -396,6 +396,18 @@ def fetch_doughcon_status():
     }
 
 
+
+def fetch_ystreet_tracker_meta():
+    """
+    YStreet ETF Tracker 하단 섹션용 메타 정보.
+    실제 화면은 index.html의 iframe으로 최신 페이지를 직접 보여준다.
+    """
+    return {
+        "ystreet_title": "YStreet ETF Tracker",
+        "ystreet_url": "https://ystreet.co.kr/etf-tracker/",
+        "ystreet_note": "아래 화면은 YStreet ETF Tracker 실시간 페이지입니다. 클릭하면 원문 페이지가 새 창으로 열립니다.",
+    }
+
 def fetch_fnguide_report_summary(url=FN_GUIDE_URL, limit=8):
     html = requests.get(
         url,
@@ -503,6 +515,13 @@ try:
     data["fnguide_reports"] = fetch_fnguide_report_summary()
 except Exception:
     data["fnguide_reports"] = []
+
+try:
+    data.update(fetch_ystreet_tracker_meta())
+except Exception:
+    data["ystreet_title"] = "YStreet ETF Tracker"
+    data["ystreet_url"] = "https://ystreet.co.kr/etf-tracker/"
+    data["ystreet_note"] = "YStreet ETF Tracker 원문 페이지를 열어 확인하세요."
 
 data["fnguide_url"] = FN_GUIDE_URL
 data["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
