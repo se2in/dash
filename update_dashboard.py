@@ -403,13 +403,12 @@ def clean_text(s):
 
 
 def fetch_ystreet_tracker_data():
-    url = "https://ystreet.co.kr/etf-tracker/"
-    html = requests.get(url, headers=HEADERS, timeout=25).text
-    soup = BeautifulSoup(html, "html.parser")
+    landing_url = "https://ystreet.co.kr/etf-tracker/"
+    app_url = "https://d1rjfvjf23ngm5.cloudfront.net/"
 
     result = {
         "ystreet_title": "YStreet ETF Tracker",
-        "ystreet_url": url,
+        "ystreet_url": app_url,
         "ystreet_note": "YStreet ETF Tracker 주요 지표를 반영했습니다.",
         "ystreet_market_buy": "-",
         "ystreet_market_sell": "-",
@@ -423,39 +422,37 @@ def fetch_ystreet_tracker_data():
         "ystreet_sell_top10": [],
     }
 
-    market_card = None
-    for h6 in soup.find_all(["h6", "h5", "h4"]):
-        if clean_text(h6.get_text()) == "당일 시장 통계":
-            market_card = h6.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root"))
-            break
-    if market_card:
-        percents = [clean_text(x.get_text()) for x in market_card.find_all(["h6", "h5", "h4"]) if re.search(r"\d+(?:\.\d+)?%", clean_text(x.get_text()))]
-        labels = [clean_text(x.get_text()) for x in market_card.find_all("span")]
-        if percents:
-            result["ystreet_market_buy"] = percents[0]
-        if len(percents) > 1:
-            result["ystreet_market_sell"] = percents[1]
-        label_hits = [x for x in labels if "우위" in x]
-        if label_hits:
-            result["ystreet_market_buy_label"] = label_hits[0]
-        if len(label_hits) > 1:
-            result["ystreet_market_sell_label"] = label_hits[1]
+    request_candidates = [
+        (app_url, {**HEADERS, "Referer": landing_url, "Origin": "https://ystreet.co.kr"}),
+        (app_url, HEADERS),
+        (landing_url, HEADERS),
+    ]
 
-    activity_card = None
-    for h6 in soup.find_all(["h6", "h5", "h4"]):
-        if "ETF 활동성 지수" in clean_text(h6.get_text()):
-            activity_card = h6.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root"))
-            break
-    if activity_card:
-        percents = [clean_text(x.get_text()) for x in activity_card.find_all(["h3", "h4", "h5", "h6"]) if re.search(r"\d+(?:\.\d+)?%", clean_text(x.get_text()))]
-        spans = [clean_text(x.get_text()) for x in activity_card.find_all("span")]
-        if percents:
-            result["ystreet_activity"] = percents[0]
-        for s in spans:
-            if "활동성 비율" in s:
-                result["ystreet_activity_label"] = s
-            elif "전체 ETF 중" in s:
-                result["ystreet_activity_note"] = s
+    html = ""
+    for url, headers in request_candidates:
+        try:
+            resp = requests.get(url, headers=headers, timeout=25)
+            if resp.ok and resp.text:
+                html = resp.text
+                if url == app_url:
+                    result["ystreet_url"] = app_url
+                    result["ystreet_note"] = "YStreet ETF Tracker 앱 직접 경로에서 주요 지표를 반영했습니다."
+                break
+        except Exception:
+            continue
+
+    if not html:
+        return result
+
+    soup = BeautifulSoup(html, "html.parser")
+
+    def find_card(title_text):
+        for tag in soup.find_all(["h1", "h2", "h3", "h4", "h5", "h6"]):
+            if title_text in clean_text(tag.get_text(" ", strip=True)):
+                card = tag.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root|MuiGrid-root"))
+                if card:
+                    return card
+        return None
 
     def split_name_code(left):
         left = clean_text(left)
@@ -475,6 +472,8 @@ def fetch_ystreet_tracker_data():
                 continue
             left = clean_text(tds[0].get_text(" ", strip=True))
             right = clean_text(tds[1].get_text(" ", strip=True))
+            if not left or left == "데이터 없음":
+                continue
             name, code = split_name_code(left)
             rows.append({"name": name, "code": code, "value": right})
         return rows
@@ -491,25 +490,71 @@ def fetch_ystreet_tracker_data():
             left = clean_text(tds[0].get_text(" ", strip=True))
             amt = clean_text(tds[1].get_text(" ", strip=True))
             etf_count = clean_text(tds[2].get_text(" ", strip=True))
+            if not left or left == "데이터 없음":
+                continue
             name, code = split_name_code(left)
             rows.append({"name": name, "code": code, "amount": amt, "etf_count": etf_count})
         return rows
 
-    returns_card = None
-    for h6 in soup.find_all(["h6", "h5", "h4"]):
-        if "기간별 수익률 상위 ETF" in clean_text(h6.get_text()):
-            returns_card = h6.find_parent(class_=re.compile(r"MuiCardContent-root|MuiCard-root|MuiPaper-root"))
-            break
+    market_card = find_card("당일 시장 통계")
+    if market_card:
+        percents = []
+        for x in market_card.find_all(["h3", "h4", "h5", "h6", "span", "p"]):
+            txt = clean_text(x.get_text(" ", strip=True))
+            if re.fullmatch(r"[+\-]?\d+(?:\.\d+)?%", txt):
+                percents.append(txt)
+        labels = [clean_text(x.get_text(" ", strip=True)) for x in market_card.find_all(["span", "p"]) if "우위" in clean_text(x.get_text(" ", strip=True))]
+        if percents:
+            result["ystreet_market_buy"] = percents[0]
+        if len(percents) > 1:
+            result["ystreet_market_sell"] = percents[1]
+        if labels:
+            result["ystreet_market_buy_label"] = labels[0]
+        if len(labels) > 1:
+            result["ystreet_market_sell_label"] = labels[1]
+
+    activity_card = find_card("ETF 활동성 지수")
+    if activity_card:
+        percents = []
+        for x in activity_card.find_all(["h3", "h4", "h5", "h6", "span", "p"]):
+            txt = clean_text(x.get_text(" ", strip=True))
+            if re.fullmatch(r"[+\-]?\d+(?:\.\d+)?%", txt):
+                percents.append(txt)
+        texts = [clean_text(x.get_text(" ", strip=True)) for x in activity_card.find_all(["span", "p", "div"]) ]
+        if percents:
+            result["ystreet_activity"] = percents[0]
+        for s in texts:
+            if "활동성 비율" in s:
+                result["ystreet_activity_label"] = s
+            elif "전체 ETF 중" in s:
+                result["ystreet_activity_note"] = s
+
+    returns_card = find_card("기간별 수익률 상위 ETF")
     if returns_card:
         result["ystreet_top_returns"] = parse_two_col_table(returns_card.find("table"))
 
     buy_table = None
     sell_table = None
-    all_tables = soup.find_all('table')
-    three_col_tables = [t for t in all_tables if len((t.find('thead') or t).find_all('th')) >= 3]
-    if len(three_col_tables) >= 2:
-        buy_table = three_col_tables[-2]
-        sell_table = three_col_tables[-1]
+    for title_text, key in [("가장 많이 산 종목 TOP 10", "buy"), ("가장 많이 판 종목 TOP 10", "sell")]:
+        card = find_card(title_text)
+        if card and card.find("table"):
+            if key == "buy":
+                buy_table = card.find("table")
+            else:
+                sell_table = card.find("table")
+
+    if buy_table is None or sell_table is None:
+        all_tables = soup.find_all("table")
+        three_col_tables = []
+        for table in all_tables:
+            headers = [clean_text(th.get_text(" ", strip=True)) for th in (table.find("thead") or table).find_all("th")]
+            if len(headers) >= 3 and any("금액 변화" in h for h in headers):
+                three_col_tables.append(table)
+        if buy_table is None and len(three_col_tables) >= 1:
+            buy_table = three_col_tables[0]
+        if sell_table is None and len(three_col_tables) >= 2:
+            sell_table = three_col_tables[1]
+
     result["ystreet_buy_top10"] = parse_three_col_table(buy_table)
     result["ystreet_sell_top10"] = parse_three_col_table(sell_table)
     return result
@@ -588,8 +633,8 @@ try:
     data.update(fetch_ystreet_tracker_data())
 except Exception:
     data["ystreet_title"] = "YStreet ETF Tracker"
-    data["ystreet_url"] = "https://ystreet.co.kr/etf-tracker/"
-    data["ystreet_note"] = "YStreet ETF Tracker 주요 지표를 반영했습니다."
+    data["ystreet_url"] = "https://d1rjfvjf23ngm5.cloudfront.net/"
+    data["ystreet_note"] = "YStreet ETF Tracker 앱 직접 경로에서 주요 지표를 반영했습니다."
 
 data["fnguide_url"] = FN_GUIDE_URL
 data["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
