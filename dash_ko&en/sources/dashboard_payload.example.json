@@ -46,6 +46,16 @@
         "label": "실적",
         "body": "반도체 대표주 실적 발표"
       }
+    ],
+    "news": [
+      {
+        "source": "국내 시장 뉴스 예시",
+        "title": "HBM 장비주 수급 개선",
+        "summary": "텔레그램 뉴스 요약 예시입니다. 클릭 링크가 있으면 원문으로 이동합니다.",
+        "url": "https://t.me/sample_korea_market_channel/1",
+        "subscribers": 100000,
+        "region": "한국"
+      }
     ]
   },
   "overseas": {
@@ -94,6 +104,16 @@
         "region": "미국",
         "label": "PMI",
         "body": "제조업/서비스업 PMI 발표"
+      }
+    ],
+    "news": [
+      {
+        "source": "해외 시장 뉴스 예시",
+        "title": "빅테크 실적 경계",
+        "summary": "해외 텔레그램 뉴스 요약 예시입니다. 클릭 링크가 있으면 원문으로 이동합니다.",
+        "url": "https://t.me/sample_global_market_channel/1",
+        "subscribers": 120000,
+        "region": "미국"
       }
     ]
   }

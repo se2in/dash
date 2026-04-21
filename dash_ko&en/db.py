@@ -84,6 +84,21 @@ CREATE TABLE IF NOT EXISTS calendar_events (
     updated_at TEXT NOT NULL,
     PRIMARY KEY (market, as_of_date, event_date, sort_order)
 );
+
+CREATE TABLE IF NOT EXISTS news_items (
+    market TEXT NOT NULL,
+    as_of_date TEXT NOT NULL,
+    sort_order INTEGER NOT NULL,
+    source TEXT NOT NULL,
+    title TEXT NOT NULL,
+    summary TEXT NOT NULL,
+    url TEXT NOT NULL,
+    published_at TEXT,
+    subscribers INTEGER,
+    region TEXT NOT NULL DEFAULT '',
+    updated_at TEXT NOT NULL,
+    PRIMARY KEY (market, as_of_date, sort_order)
+);
 """
 
 
@@ -137,6 +152,7 @@ def replace_payload(conn: sqlite3.Connection, market: str, payload: dict[str, An
     _replace_issue_alerts(conn, market, as_of_date, updated_at, payload.get("alerts", []))
     _replace_stock_ideas(conn, market, as_of_date, updated_at, payload.get("ideas", []))
     _replace_calendar_events(conn, market, as_of_date, updated_at, payload.get("events", []))
+    _replace_news_items(conn, market, as_of_date, updated_at, payload.get("news", []))
     conn.commit()
 
 
@@ -216,6 +232,18 @@ def latest_payload(conn: sqlite3.Connection, market: str) -> dict[str, Any] | No
             (market, as_of_date),
         ).fetchall()
     ]
+    news = [
+        dict(item)
+        for item in conn.execute(
+            """
+            SELECT sort_order, source, title, summary, url, published_at, subscribers, region
+            FROM news_items
+            WHERE market = ? AND as_of_date = ?
+            ORDER BY sort_order
+            """,
+            (market, as_of_date),
+        ).fetchall()
+    ]
 
     updated_row = conn.execute(
         """
@@ -234,6 +262,7 @@ def latest_payload(conn: sqlite3.Connection, market: str) -> dict[str, Any] | No
         "alerts": alerts,
         "ideas": ideas,
         "events": events,
+        "news": news,
     }
 
 
@@ -406,6 +435,44 @@ def _replace_calendar_events(
                 row["region"],
                 row["label"],
                 row["body"],
+                updated_at,
+            )
+            for index, row in enumerate(rows, start=1)
+        ],
+    )
+
+
+def _replace_news_items(
+    conn: sqlite3.Connection,
+    market: str,
+    as_of_date: str,
+    updated_at: str,
+    rows: list[dict[str, Any]],
+) -> None:
+    conn.execute(
+        "DELETE FROM news_items WHERE market = ? AND as_of_date = ?",
+        (market, as_of_date),
+    )
+    conn.executemany(
+        """
+        INSERT INTO news_items (
+            market, as_of_date, sort_order, source, title, summary,
+            url, published_at, subscribers, region, updated_at
+        )
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+        [
+            (
+                market,
+                as_of_date,
+                index,
+                row.get("source", ""),
+                row.get("title", ""),
+                row.get("summary", ""),
+                row.get("url", ""),
+                row.get("published_at"),
+                row.get("subscribers"),
+                row.get("region", ""),
                 updated_at,
             )
             for index, row in enumerate(rows, start=1)

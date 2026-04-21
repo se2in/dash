@@ -11,6 +11,8 @@ from zoneinfo import ZoneInfo
 
 import db
 from data_sources import load_external_payload
+from market_collectors import collect_market_metrics
+from telegram_news import collect_telegram_news
 
 
 KST = ZoneInfo("Asia/Seoul")
@@ -25,7 +27,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "domestic_title": "RISE ETF 국내 브리핑",
     "overseas_title": "RiseETF 글로벌 투자 브리핑",
     "brand": "RiseETF",
-    "data_source": "sample",
+    "data_source": "live",
     "data_json_path": "sources/dashboard_payload.json",
     "domestic_api_url": "",
     "overseas_api_url": "",
@@ -33,6 +35,28 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "api_auth_env": "",
     "api_auth_header": "Authorization",
     "api_auth_scheme": "Bearer",
+    "domestic_watchlist": [
+        {"code": "005930", "name": "삼성전자"},
+        {"code": "000660", "name": "SK하이닉스"},
+        {"code": "042700", "name": "한미반도체"},
+    ],
+    "overseas_tickers": {
+        "^GSPC": "S&P 500",
+        "^IXIC": "NASDAQ",
+        "^DJI": "Dow Jones",
+        "CL=F": "WTI 원유",
+        "GC=F": "금",
+        "BTC-USD": "Bitcoin",
+        "ETH-USD": "Ethereum",
+        "KRW=X": "달러/원",
+    },
+    "telegram_enabled": True,
+    "telegram_channels_path": "sources/telegram_channels.json",
+    "telegram_session_path": "data/telegram_dashboard.session",
+    "telegram_api_id_env": "TELEGRAM_API_ID",
+    "telegram_api_hash_env": "TELEGRAM_API_HASH",
+    "telegram_limit": 30,
+    "telegram_messages_per_channel": 3,
 }
 
 
@@ -50,8 +74,20 @@ def kst_now() -> datetime:
 
 def make_payload(market: str, now: datetime, config: dict[str, Any] | None = None) -> dict[str, Any]:
     config = config or DEFAULT_CONFIG
+    source = str(config.get("data_source", "live")).lower()
+    if source == "live":
+        payload = make_domestic_payload(now) if market == "domestic" else make_overseas_payload(now)
+        payload["metrics"] = collect_market_metrics(market, now, config)
+        payload["news"] = collect_telegram_news(market, config)
+        payload["headline"] = (
+            "KRX/네이버금융 가격 데이터와 텔레그램 뉴스 기반 브리핑"
+            if market == "domestic"
+            else "yfinance 가격 데이터와 텔레그램 뉴스 기반 브리핑"
+        )
+        return payload
     external_payload = load_external_payload(market, now, config)
     if external_payload is not None:
+        external_payload.setdefault("news", collect_telegram_news(market, config))
         return external_payload
     if market == "domestic":
         return make_domestic_payload(now)
@@ -406,6 +442,8 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
     )
     ideas = "".join(idea_card(row) for row in payload["ideas"])
     events = "".join(event_card(row) for row in payload["events"])
+    news_items = payload.get("news", [])
+    news = "".join(news_card(row) for row in news_items) or empty_news_card()
     brand = esc(config.get("brand", "RiseETF"))
     updated_at = payload["updated_at"].replace("T", " ")
 
@@ -652,12 +690,52 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
     }}
+    .news-grid {{
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }}
     .event {{
       min-height: 138px;
       padding: 16px;
       border-radius: 8px;
       border: 1px solid var(--line);
       background: var(--paper-2);
+    }}
+    .news-card {{
+      display: block;
+      min-height: 172px;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      color: var(--text);
+      text-decoration: none;
+    }}
+    .news-card:hover {{
+      border-color: var(--brand);
+      transform: translateY(-1px);
+    }}
+    .news-meta {{
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      margin-bottom: 10px;
+    }}
+    .news-title {{
+      display: block;
+      font-weight: 850;
+      line-height: 1.45;
+      margin-bottom: 8px;
+    }}
+    .news-summary {{
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+      word-break: keep-all;
+      overflow-wrap: anywhere;
     }}
     .event-date {{
       color: var(--brand);
@@ -674,7 +752,7 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
       main {{ width: min(100% - 20px, 720px); padding-top: 10px; }}
       .hero {{ align-items: flex-start; flex-direction: column; padding: 24px; }}
       .hero-meta {{ text-align: left; }}
-      .sector-grid, .metric-grid, .idea-flow, .event-grid {{ grid-template-columns: 1fr; }}
+      .sector-grid, .metric-grid, .idea-flow, .event-grid, .news-grid {{ grid-template-columns: 1fr; }}
       .alert {{ grid-template-columns: 1fr; }}
       .idea-head {{ flex-direction: column; }}
     }}
@@ -708,6 +786,11 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
     <section class="panel">
       <h2>투자 아이디어</h2>
       <div class="idea-list">{ideas}</div>
+    </section>
+
+    <section class="panel">
+      <h2>텔레그램 뉴스 Top 30</h2>
+      <div class="news-grid">{news}</div>
     </section>
 
     <section class="panel">
@@ -773,6 +856,40 @@ def event_card(row: dict[str, Any]) -> str:
       <div class="event-date">{esc(date_text)}</div>
       <strong><span class="region">{esc(row['region'])}</span>{esc(row['label'])}</strong>
       <p>{esc(row['body'])}</p>
+    </article>
+    """
+
+
+def news_card(row: dict[str, Any]) -> str:
+    subscribers = row.get("subscribers")
+    subscribers_text = f"{int(subscribers):,}명" if subscribers else "구독자 확인 필요"
+    url = str(row.get("url") or "").strip()
+    source = row.get("source") or "Telegram"
+    title = row.get("title") or source
+    summary = row.get("summary") or ""
+    if url:
+        return f"""
+        <a class="news-card" href="{esc(url)}" target="_blank" rel="noopener noreferrer">
+          <div class="news-meta"><span>{esc(source)}</span><span>{esc(subscribers_text)}</span></div>
+          <strong class="news-title">{esc(title)}</strong>
+          <div class="news-summary">{esc(summary)}</div>
+        </a>
+        """
+    return f"""
+    <article class="news-card">
+      <div class="news-meta"><span>{esc(source)}</span><span>{esc(subscribers_text)}</span></div>
+      <strong class="news-title">{esc(title)}</strong>
+      <div class="news-summary">{esc(summary)}</div>
+    </article>
+    """
+
+
+def empty_news_card() -> str:
+    return """
+    <article class="news-card">
+      <div class="news-meta"><span>Telegram</span><span>0명</span></div>
+      <strong class="news-title">뉴스 소스 설정 필요</strong>
+      <div class="news-summary">sources/telegram_channels.json 파일에 국내/해외 채널을 추가하세요.</div>
     </article>
     """
 

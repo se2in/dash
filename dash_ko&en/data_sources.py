@@ -91,7 +91,7 @@ def normalize_payload(payload: dict[str, Any], market: str, now: datetime) -> di
     normalized.setdefault("updated_at", now.isoformat(timespec="seconds"))
     normalized.setdefault("headline", "")
 
-    for key in ("metrics", "sector_cards", "alerts", "ideas", "events"):
+    for key in ("metrics", "sector_cards", "alerts", "ideas", "events", "news"):
         value = normalized.get(key)
         if value is None:
             normalized[key] = []
