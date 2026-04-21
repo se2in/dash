@@ -1,19 +1,19 @@
 window.dashboardData = {
-  "sp500": "7,109.14",
-  "sp500_chg": "-0.24% vs prev close",
-  "vix": "18.87",
-  "vix_chg": "+7.95% vs prev close",
-  "gold": "4,818.20",
-  "gold_chg": "-0.81% vs prev close",
-  "oil": "86.60",
-  "oil_chg": "+3.28% vs prev close",
-  "btc": "75,562.00",
-  "btc_chg": "+2.31% vs prev close",
-  "usdkrw": "1,471.50",
-  "usdkrw_chg": "+0.43% vs prev close",
+  "sp500": "7,064.01",
+  "sp500_chg": "-0.63% vs prev close",
+  "vix": "19.50",
+  "vix_chg": "+3.34% vs prev close",
+  "gold": "4,734.80",
+  "gold_chg": "-1.49% vs prev close",
+  "oil": "90.25",
+  "oil_chg": "+0.71% vs prev close",
+  "btc": "75,428.09",
+  "btc_chg": "-0.59% vs prev close",
+  "usdkrw": "1,486.73",
+  "usdkrw_chg": "+1.47% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "70",
+  "fear_greed": "68",
   "fear_greed_label": "greed",
   "options_expiry": "2026-04-24",
   "options_note": "주간 만기",
@@ -23,12 +23,12 @@ window.dashboardData = {
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-04-21\n12:42\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-04-22\n07:42\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
-  "nextrade_change": "+1.41%",
-  "nextrade_issues": "636",
-  "nextrade_volume": "65,239,743",
-  "nextrade_value": "4,041,442,779,320",
+  "nextrade_change": "0.00%",
+  "nextrade_issues": "0",
+  "nextrade_volume": "0",
+  "nextrade_value": "0",
   "nextrade_note": "* 등락률은 기준시점 대비 시가총액의 증감률임",
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
@@ -38,13 +38,6 @@ window.dashboardData = {
   "doughcon_status": "ELEVATED WATCH",
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
-    {
-      "date": "2026-04-21",
-      "symbol": "UNH",
-      "company": "UnitedHealth Group Incorporated",
-      "eps_estimate": "6.61",
-      "time": "BMO"
-    },
     {
       "date": "2026-04-22",
       "symbol": "TSLA",
@@ -57,6 +50,41 @@ window.dashboardData = {
       "symbol": "INTC",
       "company": "Intel Corporation",
       "eps_estimate": "0.01",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-04-29",
+      "symbol": "AMZN",
+      "company": "Amazon.com, Inc.",
+      "eps_estimate": "1.65",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-04-29",
+      "symbol": "GOOGL",
+      "company": "Alphabet Inc.",
+      "eps_estimate": "2.62",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-04-29",
+      "symbol": "META",
+      "company": "Meta Platforms, Inc.",
+      "eps_estimate": "6.64",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-04-29",
+      "symbol": "MSFT",
+      "company": "Microsoft Corporation",
+      "eps_estimate": "4.07",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-04-29",
+      "symbol": "QCOM",
+      "company": "QUALCOMM Incorporated",
+      "eps_estimate": "2.56",
       "time": "AMC"
     }
   ],
@@ -75,5 +103,5 @@ window.dashboardData = {
   "ystreet_buy_top10": [],
   "ystreet_sell_top10": [],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-21 12:43:47"
+  "updated_at": "2026-04-22 07:44:20"
 };
