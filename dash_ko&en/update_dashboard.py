@@ -10,6 +10,7 @@ from typing import Any
 from zoneinfo import ZoneInfo
 
 import db
+from data_sources import load_external_payload
 
 
 KST = ZoneInfo("Asia/Seoul")
@@ -25,6 +26,13 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "overseas_title": "RiseETF 글로벌 투자 브리핑",
     "brand": "RiseETF",
     "data_source": "sample",
+    "data_json_path": "sources/dashboard_payload.json",
+    "domestic_api_url": "",
+    "overseas_api_url": "",
+    "api_timeout_seconds": 20,
+    "api_auth_env": "",
+    "api_auth_header": "Authorization",
+    "api_auth_scheme": "Bearer",
 }
 
 
@@ -40,7 +48,11 @@ def kst_now() -> datetime:
     return datetime.now(KST)
 
 
-def make_payload(market: str, now: datetime) -> dict[str, Any]:
+def make_payload(market: str, now: datetime, config: dict[str, Any] | None = None) -> dict[str, Any]:
+    config = config or DEFAULT_CONFIG
+    external_payload = load_external_payload(market, now, config)
+    if external_payload is not None:
+        return external_payload
     if market == "domestic":
         return make_domestic_payload(now)
     if market == "overseas":
@@ -324,7 +336,7 @@ def event(day: Any, region: str, label: str, body: str) -> dict[str, str]:
 
 def update_market(market: str, config: dict[str, Any]) -> Path:
     now = kst_now()
-    payload = make_payload(market, now)
+    payload = make_payload(market, now, config)
     output_path = output_file_for(market, config)
 
     with db.connect(config["database_path"]) as conn:

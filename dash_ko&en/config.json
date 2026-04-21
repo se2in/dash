@@ -6,5 +6,12 @@
   "domestic_title": "RISE ETF 국내 브리핑",
   "overseas_title": "RiseETF 글로벌 투자 브리핑",
   "brand": "RiseETF",
-  "data_source": "sample"
+  "data_source": "sample",
+  "data_json_path": "sources/dashboard_payload.json",
+  "domestic_api_url": "",
+  "overseas_api_url": "",
+  "api_timeout_seconds": 20,
+  "api_auth_env": "",
+  "api_auth_header": "Authorization",
+  "api_auth_scheme": "Bearer"
 }

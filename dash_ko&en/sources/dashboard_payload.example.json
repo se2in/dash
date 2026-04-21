@@ -1,0 +1,100 @@
+{
+  "domestic": {
+    "as_of_date": "2026-04-21",
+    "headline": "국내 장 마감 후 실제 수급/뉴스/API 데이터를 반영한 브리핑",
+    "metrics": [
+      {
+        "group_name": "시장",
+        "label": "KOSPI",
+        "value": "2,745.82",
+        "delta": "+0.44%",
+        "tone": "up",
+        "note": "기관 순매수"
+      }
+    ],
+    "sector_cards": [
+      {
+        "title": "반도체",
+        "body": "HBM 장비주 수급 개선과 실적 기대가 동시 부각.",
+        "tone": "hot"
+      }
+    ],
+    "alerts": [
+      {
+        "severity": "core",
+        "title": "핵심 이슈",
+        "body": "장 마감 후 주요 실적과 외국인 선물 포지션 확인."
+      }
+    ],
+    "ideas": [
+      {
+        "rank": 1,
+        "title": "HBM 장비 수혜주",
+        "category": "반도체",
+        "rating": 5,
+        "big_picture": "AI 서버 투자 확대가 메모리 장비 수요를 견인.",
+        "inflection": "실적 발표와 신규 수주 공시가 촉매.",
+        "beneficiaries": ["한미반도체 042700", "원익IPS 240810"],
+        "risk": "Capex 가이던스 하향",
+        "rise_etf": "RISE 반도체 ETF"
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-21",
+        "region": "한국",
+        "label": "실적",
+        "body": "반도체 대표주 실적 발표"
+      }
+    ]
+  },
+  "overseas": {
+    "as_of_date": "2026-04-21",
+    "headline": "해외 장 마감 후 실제 매크로/뉴스/API 데이터를 반영한 브리핑",
+    "metrics": [
+      {
+        "group_name": "미국 증시",
+        "label": "S&P 500",
+        "value": "5,092.20",
+        "delta": "-0.61%",
+        "tone": "down",
+        "note": "실적 경계"
+      }
+    ],
+    "sector_cards": [
+      {
+        "title": "원유/에너지",
+        "body": "중동 리스크와 재고 지표가 원유 가격 변동성을 확대.",
+        "tone": "hot"
+      }
+    ],
+    "alerts": [
+      {
+        "severity": "urgent",
+        "title": "긴급 이슈",
+        "body": "WTI 변동성과 달러 방향성 확인."
+      }
+    ],
+    "ideas": [
+      {
+        "rank": 1,
+        "title": "방산/에너지 이벤트 대응",
+        "category": "글로벌 ETF",
+        "rating": 4,
+        "big_picture": "지정학 리스크가 방산과 에너지 섹터 프리미엄을 지지.",
+        "inflection": "유가 100달러 접근과 신규 수주 뉴스.",
+        "beneficiaries": ["XOM", "CVX", "LMT"],
+        "risk": "휴전 장기화와 유가 급락",
+        "rise_etf": "RISE 글로벌 방산 ETF"
+      }
+    ],
+    "events": [
+      {
+        "event_date": "2026-04-21",
+        "region": "미국",
+        "label": "PMI",
+        "body": "제조업/서비스업 PMI 발표"
+      }
+    ]
+  }
+}

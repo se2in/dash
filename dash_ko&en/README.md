@@ -33,4 +33,10 @@ Windows 작업 스케줄러는 PC의 로컬 시간대를 사용합니다. 현재
 
 ## 실제 데이터 연결
 
-현재 `data_source`는 `sample`입니다. 증권사 API, 크롤링 데이터, 텔레그램/뉴스 요약 파일, 기존 ETF 모니터 DB를 연결하려면 `update_dashboard.py`의 `make_domestic_payload`, `make_overseas_payload` 함수만 실제 수집 함수로 교체하면 됩니다.
+기본값인 `data_source: "sample"`은 샘플 데이터를 생성합니다. 실제 뉴스/API 결과를 연결하려면 `config.json`의 `data_source`를 바꿉니다.
+
+- `json`: `data_json_path`의 JSON 파일을 읽습니다. 형식 예시는 `sources/dashboard_payload.example.json`입니다.
+- `api`: `domestic_api_url`, `overseas_api_url`에서 JSON payload를 받아옵니다.
+- `auto`: JSON 파일이 있으면 JSON을 먼저 쓰고, 없으면 API URL을 시도하며, 둘 다 없으면 샘플을 씁니다.
+
+API 인증이 필요하면 토큰을 환경변수에 넣고 `api_auth_env`에 환경변수 이름을 설정합니다. 예를 들어 `MARKET_API_TOKEN`을 쓰면 API 요청에 `Authorization: Bearer <token>` 헤더가 붙습니다.
