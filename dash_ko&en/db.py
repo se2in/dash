@@ -42,6 +42,8 @@ CREATE TABLE IF NOT EXISTS sector_cards (
     title TEXT NOT NULL,
     body TEXT NOT NULL,
     tone TEXT NOT NULL DEFAULT 'neutral',
+    url TEXT NOT NULL DEFAULT '',
+    top_stocks_json TEXT NOT NULL DEFAULT '[]',
     updated_at TEXT NOT NULL,
     PRIMARY KEY (market, as_of_date, sort_order)
 );
@@ -117,7 +119,15 @@ def connect(database_path: str | Path) -> sqlite3.Connection:
 
 def init_db(conn: sqlite3.Connection) -> None:
     conn.executescript(SCHEMA)
+    ensure_column(conn, "sector_cards", "url", "TEXT NOT NULL DEFAULT ''")
+    ensure_column(conn, "sector_cards", "top_stocks_json", "TEXT NOT NULL DEFAULT '[]'")
     conn.commit()
+
+
+def ensure_column(conn: sqlite3.Connection, table: str, column: str, column_type: str) -> None:
+    columns = {row["name"] for row in conn.execute(f"PRAGMA table_info({table})").fetchall()}
+    if column not in columns:
+        conn.execute(f"ALTER TABLE {table} ADD COLUMN {column} {column_type}")
 
 
 def start_run(conn: sqlite3.Connection, market: str) -> int:
@@ -185,7 +195,7 @@ def latest_payload(conn: sqlite3.Connection, market: str) -> dict[str, Any] | No
         dict(item)
         for item in conn.execute(
             """
-            SELECT sort_order, title, body, tone
+            SELECT sort_order, title, body, tone, url, top_stocks_json
             FROM sector_cards
             WHERE market = ? AND as_of_date = ?
             ORDER BY sort_order
@@ -232,6 +242,8 @@ def latest_payload(conn: sqlite3.Connection, market: str) -> dict[str, Any] | No
             (market, as_of_date),
         ).fetchall()
     ]
+    for sector in sectors:
+        sector["top_stocks"] = json.loads(sector.pop("top_stocks_json") or "[]")
     news = [
         dict(item)
         for item in conn.execute(
@@ -317,9 +329,9 @@ def _replace_sector_cards(
     conn.executemany(
         """
         INSERT INTO sector_cards (
-            market, as_of_date, sort_order, title, body, tone, updated_at
+            market, as_of_date, sort_order, title, body, tone, url, top_stocks_json, updated_at
         )
-        VALUES (?, ?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
         """,
         [
             (
@@ -329,6 +341,8 @@ def _replace_sector_cards(
                 row["title"],
                 row["body"],
                 row.get("tone", "neutral"),
+                row.get("url", ""),
+                json.dumps(row.get("top_stocks", []), ensure_ascii=False),
                 updated_at,
             )
             for index, row in enumerate(rows, start=1)

@@ -64,11 +64,12 @@ def build_domestic_core_issues(
     metrics: list[dict[str, Any]],
     config: dict[str, Any],
     now: datetime,
+    articles: list[NewsArticle] | None = None,
 ) -> list[dict[str, str]]:
     if not bool(config.get("naver_issue_enabled", True)):
         return []
 
-    articles = collect_naver_finance_news(config)
+    articles = articles if articles is not None else collect_naver_finance_news(config)
     if not articles:
         return fallback_issues(metrics)
 

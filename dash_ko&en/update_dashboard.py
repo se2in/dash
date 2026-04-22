@@ -12,7 +12,8 @@ from zoneinfo import ZoneInfo
 import db
 from data_sources import load_external_payload
 from market_collectors import collect_market_metrics
-from naver_issues import build_domestic_core_issues
+from naver_issues import build_domestic_core_issues, collect_naver_finance_news
+from sector_temperature import build_sector_temperature
 from telegram_news import collect_telegram_news
 
 
@@ -92,7 +93,9 @@ def make_payload(market: str, now: datetime, config: dict[str, Any] | None = Non
         payload["metrics"] = collect_market_metrics(market, now, config)
         payload["news"] = collect_telegram_news(market, config)
         if market == "domestic":
-            payload["alerts"] = build_domestic_core_issues(payload["metrics"], config, now)
+            articles = collect_naver_finance_news(config)
+            payload["alerts"] = build_domestic_core_issues(payload["metrics"], config, now, articles=articles)
+            payload["sector_cards"] = build_sector_temperature(payload["metrics"], config, articles)
         payload["headline"] = (
             "KRX/네이버금융 가격 데이터와 텔레그램 뉴스 기반 브리핑"
             if market == "domestic"
@@ -433,15 +436,7 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
         """
         for group, rows in metrics_by_group.items()
     )
-    sector_cards = "".join(
-        f"""
-        <article class="sector-card {esc(row['tone'])}">
-          <strong>{esc(row['title'])}</strong>
-          <p>{esc(row['body'])}</p>
-        </article>
-        """
-        for row in payload["sector_cards"]
-    )
+    sector_cards = "".join(sector_card(row) for row in payload["sector_cards"])
     alerts = "".join(
         f"""
         <article class="alert {esc(row['severity'])}">
@@ -552,11 +547,19 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
       gap: 14px;
     }}
     .sector-card {{
+      display: block;
       min-height: 124px;
       padding: 16px;
       border-radius: 8px;
       border: 1px solid var(--line);
       background: var(--paper-2);
+      color: var(--text);
+      text-decoration: none;
+      transition: transform .14s ease, border-color .14s ease;
+    }}
+    .sector-card[href]:hover {{
+      transform: translateY(-1px);
+      border-color: var(--brand);
     }}
     .sector-card strong {{ font-size: 16px; }}
     .sector-card p, .alert p, .idea p, .event p {{
@@ -571,6 +574,24 @@ def build_html(theme: str, title: str, payload: dict[str, Any], config: dict[str
     .sector-card.cool {{ border-color: rgba(43, 116, 199, .30); background: {'#eff6ff' if theme == 'light' else '#111d2d'}; }}
     .sector-card.blue {{ border-color: rgba(43, 116, 199, .42); }}
     .sector-card.green {{ border-color: rgba(46, 158, 98, .42); background: {'#eefaf3' if theme == 'light' else '#11251a'}; }}
+    .sector-stocks {{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 12px;
+    }}
+    .stock-pill {{
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--paper);
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 800;
+    }}
     .metric-panel {{ padding-bottom: 14px; }}
     .metric-grid {{
       display: grid;
@@ -834,6 +855,31 @@ def metric_card(row: dict[str, Any]) -> str:
         <small class="{tone}">{esc(row.get('delta') or '')}</small>
       </div>
       <div class="metric-note">{esc(row.get('note') or '')}</div>
+    </article>
+    """
+
+
+def sector_card(row: dict[str, Any]) -> str:
+    tone = esc(row.get("tone", "neutral"))
+    stocks = "".join(
+        f'<span class="stock-pill">{esc(item.get("name", ""))} {esc(item.get("delta", ""))}</span>'
+        for item in row.get("top_stocks", [])
+    )
+    inner = f"""
+      <strong>{esc(row['title'])}</strong>
+      <p>{esc(row['body'])}</p>
+      <div class="sector-stocks">{stocks}</div>
+    """
+    url = str(row.get("url") or "").strip()
+    if url:
+        return f"""
+        <a class="sector-card {tone}" href="{esc(url)}" target="_blank" rel="noopener noreferrer">
+          {inner}
+        </a>
+        """
+    return f"""
+    <article class="sector-card {tone}">
+      {inner}
     </article>
     """
 
