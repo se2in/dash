@@ -5,7 +5,7 @@
   "overseas_output": "overseas_dashboard.html",
   "domestic_title": "유진증권 안상현 센터장의 국장 마감 대쉬보드",
   "overseas_title": "유진증권 안상현 센터장의 미장 마감 대쉬보드",
-  "brand": "RiseETF",
+  "brand": "",
   "data_source": "live",
   "data_json_path": "sources/dashboard_payload.json",
   "domestic_api_url": "",
