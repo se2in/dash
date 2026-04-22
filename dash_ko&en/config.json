@@ -44,5 +44,16 @@
   "telegram_api_id_env": "TELEGRAM_API_ID",
   "telegram_api_hash_env": "TELEGRAM_API_HASH",
   "telegram_limit": 30,
-  "telegram_messages_per_channel": 3
+  "telegram_messages_per_channel": 3,
+  "naver_issue_enabled": true,
+  "naver_news_limit": 32,
+  "domestic_naver_news_queries": [
+    "금융 증시",
+    "코스피 코스닥",
+    "반도체 삼성전자 SK하이닉스",
+    "환율 금리 유가"
+  ],
+  "naver_client_id_env": "NAVER_CLIENT_ID",
+  "naver_client_secret_env": "NAVER_CLIENT_SECRET",
+  "naver_openapi_query": "금융 증시 반도체 환율"
 }

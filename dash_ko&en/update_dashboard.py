@@ -12,6 +12,7 @@ from zoneinfo import ZoneInfo
 import db
 from data_sources import load_external_payload
 from market_collectors import collect_market_metrics
+from naver_issues import build_domestic_core_issues
 from telegram_news import collect_telegram_news
 
 
@@ -57,6 +58,17 @@ DEFAULT_CONFIG: dict[str, Any] = {
     "telegram_api_hash_env": "TELEGRAM_API_HASH",
     "telegram_limit": 30,
     "telegram_messages_per_channel": 3,
+    "naver_issue_enabled": True,
+    "naver_news_limit": 32,
+    "domestic_naver_news_queries": [
+        "금융 증시",
+        "코스피 코스닥",
+        "반도체 삼성전자 SK하이닉스",
+        "환율 금리 유가",
+    ],
+    "naver_client_id_env": "NAVER_CLIENT_ID",
+    "naver_client_secret_env": "NAVER_CLIENT_SECRET",
+    "naver_openapi_query": "금융 증시 반도체 환율",
 }
 
 
@@ -79,6 +91,8 @@ def make_payload(market: str, now: datetime, config: dict[str, Any] | None = Non
         payload = make_domestic_payload(now) if market == "domestic" else make_overseas_payload(now)
         payload["metrics"] = collect_market_metrics(market, now, config)
         payload["news"] = collect_telegram_news(market, config)
+        if market == "domestic":
+            payload["alerts"] = build_domestic_core_issues(payload["metrics"], config, now)
         payload["headline"] = (
             "KRX/네이버금융 가격 데이터와 텔레그램 뉴스 기반 브리핑"
             if market == "domestic"
