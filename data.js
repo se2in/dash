@@ -53,5 +53,5 @@ window.dashboardData = {
   "ystreet_buy_top10": [],
   "ystreet_sell_top10": [],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-23 07:14:14"
+  "updated_at": "2026-04-23 07:14:48"
 };
