@@ -1,10 +1,14 @@
 from pathlib import Path
 from datetime import datetime, timedelta, date
 from io import StringIO
-import json, re, requests, pandas as pd, yfinance as yf
+import json, re, sqlite3, requests, pandas as pd, yfinance as yf
 from bs4 import BeautifulSoup
 
 BASE_DIR = Path(__file__).resolve().parent
+VRP_DB_CANDIDATES = [
+    Path(r"C:\Users\se2in\Desktop\destiny\vix_bottom\vrp_market_data.sqlite"),
+    Path(r"C:\Users\se2in\Desktop\destiny\vix\vrp_market_data.sqlite"),
+]
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0 Safari/537.36",
     "Accept-Language": "en-US,en;q=0.9",
@@ -560,6 +564,90 @@ def fetch_ystreet_tracker_data():
     return result
 
 
+def format_market_value(value):
+    if value is None or pd.isna(value):
+        return "-"
+    return f"{float(value):,.2f}"
+
+
+def latest_non_null(df, column):
+    valid = df.dropna(subset=[column])
+    if valid.empty:
+        return None
+    return valid.iloc[-1]
+
+
+def clean_json_value(value):
+    if value is None or pd.isna(value):
+        return None
+    return float(value)
+
+
+def fetch_vrp_dashboard_data():
+    db_path = next((p for p in VRP_DB_CANDIDATES if p.exists()), None)
+    if db_path is None:
+        return {
+            "usa_vrp": "-",
+            "krx_vrp": "-",
+            "usa_vrp_z": "-",
+            "krx_vrp_z": "-",
+            "vrp_note": "VRP DB를 찾을 수 없습니다.",
+            "vrp_chart": [],
+        }
+
+    with sqlite3.connect(db_path) as con:
+        metrics = pd.read_sql_query(
+            """
+            select date, vix, spy_realized_vol_21d, usa_vrp,
+                   vkospi, kospi_realized_vol_21d, krx_vrp
+            from vrp_metrics
+            order by date
+            """,
+            con,
+        )
+        zscores = pd.read_sql_query(
+            """
+            select date, usa_vrp_zscore_252d, krx_vrp_zscore_252d
+            from zscores
+            order by date
+            """,
+            con,
+        )
+
+    merged = metrics.merge(zscores, on="date", how="left")
+    usa = latest_non_null(merged, "usa_vrp")
+    krx = latest_non_null(merged, "krx_vrp")
+    usa_z = latest_non_null(merged, "usa_vrp_zscore_252d")
+    krx_z = latest_non_null(merged, "krx_vrp_zscore_252d")
+
+    chart_cols = ["vix", "spy_realized_vol_21d", "vkospi", "kospi_realized_vol_21d"]
+    chart_df = merged.dropna(subset=chart_cols, how="all").tail(260)
+    chart = []
+    for row in chart_df.itertuples(index=False):
+        chart.append(
+            {
+                "date": row.date,
+                "vix": clean_json_value(row.vix),
+                "spy_rv": clean_json_value(row.spy_realized_vol_21d),
+                "vkospi": clean_json_value(row.vkospi),
+                "kospi_rv": clean_json_value(row.kospi_realized_vol_21d),
+            }
+        )
+
+    return {
+        "usa_vrp": format_market_value(None if usa is None else usa["usa_vrp"]),
+        "krx_vrp": format_market_value(None if krx is None else krx["krx_vrp"]),
+        "usa_vrp_z": format_market_value(None if usa_z is None else usa_z["usa_vrp_zscore_252d"]),
+        "krx_vrp_z": format_market_value(None if krx_z is None else krx_z["krx_vrp_zscore_252d"]),
+        "usa_vrp_note": "-" if usa is None else f"{usa['date']} 기준",
+        "krx_vrp_note": "-" if krx is None else f"{krx['date']} 기준",
+        "usa_vrp_z_note": "-" if usa_z is None else f"{usa_z['date']} 기준",
+        "krx_vrp_z_note": "-" if krx_z is None else f"{krx_z['date']} 기준",
+        "vrp_note": f"DB: {db_path}",
+        "vrp_chart": chart,
+    }
+
+
 data = {}
 for key, ticker in {
     "sp500": "^GSPC",
@@ -635,6 +723,16 @@ except Exception:
     data["ystreet_title"] = "YStreet ETF Tracker"
     data["ystreet_url"] = "https://d1rjfvjf23ngm5.cloudfront.net/#dashboard"
     data["ystreet_note"] = "ActiveETF Tracker 대시보드 직접 경로를 사용합니다."
+
+try:
+    data.update(fetch_vrp_dashboard_data())
+except Exception:
+    data["usa_vrp"] = "-"
+    data["krx_vrp"] = "-"
+    data["usa_vrp_z"] = "-"
+    data["krx_vrp_z"] = "-"
+    data["vrp_note"] = "VRP 데이터를 불러오지 못했습니다."
+    data["vrp_chart"] = []
 
 data["fnguide_url"] = FN_GUIDE_URL
 data["updated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
