@@ -6,6 +6,11 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+def wait_before_exit():
+    if sys.stdin.isatty():
+        input("엔터를 누르면 종료합니다...")
+
+
 def run(cmd: str, allow_fail: bool = False):
     print(f"\n[RUN] {cmd}")
     result = subprocess.run(
@@ -69,7 +74,7 @@ def main():
                 print("[INFO] 이 경우는 보통 아래 둘 중 하나입니다.")
                 print("       1) 실제 파일 저장이 안 됨")
                 print("       2) 다른 폴더의 파일을 수정함")
-                input("엔터를 누르면 종료합니다...")
+                wait_before_exit()
                 return
             else:
                 raise RuntimeError("git commit 중 오류가 발생했습니다.")
@@ -86,7 +91,7 @@ def main():
     except Exception as e:
         print(f"\n[ERROR] {e}")
 
-    input("엔터를 누르면 종료합니다...")
+    wait_before_exit()
 
 
 if __name__ == "__main__":
