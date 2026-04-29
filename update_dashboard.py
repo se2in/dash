@@ -651,6 +651,8 @@ def fetch_vrp_dashboard_data():
 data = {}
 for key, ticker in {
     "sp500": "^GSPC",
+    "nasdaq100": "^NDX",
+    "dowjones": "^DJI",
     "vix": "^VIX",
     "gold": "GC=F",
     "oil": "CL=F",
