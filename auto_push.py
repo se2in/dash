@@ -8,7 +8,10 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def wait_before_exit():
     if sys.stdin.isatty():
-        input("엔터를 누르면 종료합니다...")
+        try:
+            input("엔터를 누르면 종료합니다...")
+        except EOFError:
+            pass
 
 
 def run(cmd: str, allow_fail: bool = False):
