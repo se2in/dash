@@ -43,6 +43,7 @@ def main():
 
         # 0) 현재 git 저장소 위치 확인
         run("git rev-parse --show-toplevel")
+        run("git fetch origin", allow_fail=True)
 
         # 1) 대시보드 데이터 업데이트
         run(f'"{sys.executable}" update_dashboard.py')
@@ -84,7 +85,18 @@ def main():
         run("git log -1 --stat")
 
         # 7) GitHub로 푸시
-        run("git push origin main")
+        push_result = run("git push origin main", allow_fail=True)
+        push_output = (push_result.stdout or "") + "\n" + (push_result.stderr or "")
+        if push_result.returncode != 0 and (
+            "fetch first" in push_output.lower()
+            or "non-fast-forward" in push_output.lower()
+            or "rejected" in push_output.lower()
+        ):
+            print("\n[INFO] 원격 main에 새 커밋이 있어 먼저 병합 후 다시 푸시합니다.")
+            run("git pull --no-edit origin main")
+            run("git push origin main")
+        elif push_result.returncode != 0:
+            raise RuntimeError("git push 중 오류가 발생했습니다.")
 
         print("\n[DONE] 자동 업데이트 및 GitHub push 완료")
 
