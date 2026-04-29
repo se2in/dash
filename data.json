@@ -3,14 +3,14 @@
   "sp500_chg": "-0.49% vs prev close",
   "vix": "17.83",
   "vix_chg": "-1.05% vs prev close",
-  "gold": "4,603.30",
-  "gold_chg": "-1.54% vs prev close",
-  "oil": "99.51",
-  "oil_chg": "+3.26% vs prev close",
-  "btc": "76,305.30",
-  "btc_chg": "-1.37% vs prev close",
-  "usdkrw": "1,473.00",
-  "usdkrw_chg": "-0.11% vs prev close",
+  "gold": "4,608.60",
+  "gold_chg": "-1.43% vs prev close",
+  "oil": "99.43",
+  "oil_chg": "+3.18% vs prev close",
+  "btc": "76,318.32",
+  "btc_chg": "-1.35% vs prev close",
+  "usdkrw": "1,472.28",
+  "usdkrw_chg": "-0.05% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
   "fear_greed": "64",
@@ -23,7 +23,7 @@
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-04-29\n08:52\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-04-29\n09:09\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "-0.61%",
   "nextrade_issues": "627",
@@ -1976,5 +1976,5 @@
     }
   ],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-04-29 08:54:07"
+  "updated_at": "2026-04-29 09:10:58"
 }
