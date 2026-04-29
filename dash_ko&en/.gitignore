@@ -1,0 +1,7 @@
+data/
+output/
+__pycache__/
+*.pyc
+.env
+.venv/
+sources/telegram_channels.json
