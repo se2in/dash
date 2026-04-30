@@ -127,14 +127,24 @@ h1{margin:0 0 18px 0;font-size:30px;font-weight:800}h2{margin:24px 0 12px 0;font
 <div class="wrap">
 <h1>유진증권 안상현 센터장의 Morning DashBoard</h1>
 
-<h2>시장 핵심 지표</h2>
+<h2>주요 지수</h2>
 <div class="grid-cards">
 <div class="card market-card active" data-symbol="FOREXCOM:SPXUSD" data-title="S&P500"><div class="label">S&P500</div><div class="value" id="sp500">-</div><div class="sub" id="sp500_chg">-</div></div>
-<div class="card market-card" data-symbol="VIX" data-title="VIX"><div class="label">VIX</div><div class="value" id="vix">-</div><div class="sub" id="vix_chg">-</div></div>
+<div class="card market-card" data-symbol="NASDAQ:NDX" data-title="나스닥 테크 100"><div class="label">나스닥 테크 100</div><div class="value" id="nasdaq100">-</div><div class="sub" id="nasdaq100_chg">-</div></div>
+<div class="card market-card" data-symbol="TVC:DJI" data-title="다우존스"><div class="label">다우존스</div><div class="value" id="dowjones">-</div><div class="sub" id="dowjones_chg">-</div></div>
 <div class="card market-card" data-symbol="XAUUSD" data-title="Gold"><div class="label">Gold</div><div class="value" id="gold">-</div><div class="sub" id="gold_chg">-</div></div>
 <div class="card market-card" data-symbol="WTI1!" data-title="Oil (WTI)"><div class="label">Oil (WTI)</div><div class="value" id="oil">-</div><div class="sub" id="oil_chg">-</div></div>
 <div class="card market-card" data-symbol="BITSTAMP:BTCUSD" data-title="BTC"><div class="label">BTC</div><div class="value" id="btc">-</div><div class="sub" id="btc_chg">-</div></div>
 <div class="card market-card" data-symbol="FX_IDC:USDKRW" data-title="USD/KRW"><div class="label">USD/KRW</div><div class="value" id="usdkrw">-</div><div class="sub" id="usdkrw_chg">-</div></div>
+</div>
+
+<h2>위험/변동성 지표</h2>
+<div class="grid-cards">
+<div class="card market-card" data-symbol="VIX" data-title="VIX"><div class="label">VIX</div><div class="value" id="vix">-</div><div class="sub" id="vix_chg">-</div></div>
+<div class="card market-card" data-symbol="VRP" data-title="Implied vs Realized Volatility"><div class="label">USA VRP</div><div class="value" id="usa_vrp">-</div><div class="sub" id="usa_vrp_note">-</div></div>
+<div class="card market-card" data-symbol="VRP" data-title="Implied vs Realized Volatility"><div class="label">KRX VRP</div><div class="value" id="krx_vrp">-</div><div class="sub" id="krx_vrp_note">-</div></div>
+<div class="card market-card" data-symbol="VRP" data-title="Implied vs Realized Volatility"><div class="label">USA VRP Z</div><div class="value" id="usa_vrp_z">-</div><div class="sub" id="usa_vrp_z_note">252거래일 z-score</div></div>
+<div class="card market-card" data-symbol="VRP" data-title="Implied vs Realized Volatility"><div class="label">KRX VRP Z</div><div class="value" id="krx_vrp_z">-</div><div class="sub" id="krx_vrp_z_note">252거래일 z-score</div></div>
 <div class="card market-card" data-symbol="FRED:T10Y2Y" data-title="미국채 장단기 금리차"><div class="label">10Y-2Y Spread</div><div class="value" id="yield_spread">-</div><div class="sub" id="yield_spread_chg">-</div></div>
 <div class="card market-card" data-symbol="FGI" data-title="Fear & Greed"><div class="label">Fear & Greed</div><div class="value" id="fear_greed">-</div><div class="sub" id="fear_greed_label">-</div></div>
 <div class="card market-card" data-symbol="OPTION" data-title="이번주 옵션만기"><div class="label">이번주 옵션만기</div><div class="value" id="options_expiry">-</div><div class="sub" id="options_note">-</div></div>
@@ -335,7 +345,7 @@ h1{margin:0 0 18px 0;font-size:30px;font-weight:800}h2{margin:24px 0 12px 0;font
 (function(){
 const d=window.dashboardData||{};
 function set(id,v){const el=document.getElementById(id);if(el)el.innerText=(v??"-");}
-["sp500","sp500_chg","vix","vix_chg","gold","gold_chg","oil","oil_chg","btc","btc_chg","usdkrw","usdkrw_chg","yield_spread","yield_spread_chg","fear_greed","fear_greed_label","options_expiry","options_note","cpi_yoy","cpi_date","nfp_mom","nfp_date","next_cpi","next_nfp","fedwatch_hold","fedwatch_hike","fedwatch_date","nextrade_basis","nextrade_session","nextrade_change","nextrade_issues","nextrade_volume","nextrade_value","nextrade_note","doughcon_level","doughcon_location","doughcon_status","doughcon_note"].forEach(k=>set(k,d[k]));
+["sp500","sp500_chg","nasdaq100","nasdaq100_chg","dowjones","dowjones_chg","vix","vix_chg","usa_vrp","usa_vrp_note","krx_vrp","krx_vrp_note","usa_vrp_z","usa_vrp_z_note","krx_vrp_z","krx_vrp_z_note","gold","gold_chg","oil","oil_chg","btc","btc_chg","usdkrw","usdkrw_chg","yield_spread","yield_spread_chg","fear_greed","fear_greed_label","options_expiry","options_note","cpi_yoy","cpi_date","nfp_mom","nfp_date","next_cpi","next_nfp","fedwatch_hold","fedwatch_hike","fedwatch_date","nextrade_basis","nextrade_session","nextrade_change","nextrade_issues","nextrade_volume","nextrade_value","nextrade_note","doughcon_level","doughcon_location","doughcon_status","doughcon_note"].forEach(k=>set(k,d[k]));
 if (d.fnguide_url && document.getElementById("fnguide_link")) document.getElementById("fnguide_link").href = d.fnguide_url;
 if (!d.fedwatch_hold) document.getElementById("fedwatch_hold").innerText = "동결 -";
 if (!d.fedwatch_hike) document.getElementById("fedwatch_hike").innerText = "변경 -";
@@ -368,8 +378,33 @@ function renderGauge(){const score=Number(d.fear_greed);const label=d.fear_greed
 function renderOptionInfo(){title.innerText="이번주 옵션만기";host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${d.options_expiry||"-"}</div><div class="pill">${d.options_note||"-"}</div><div class="note">주간 만기는 이번 주 금요일 기준으로 계산했고, 셋째 금요일이면 월간 만기로 표시했습니다.</div></div>`;host.style.height="430px";}
 function renderNextradeInfo(){title.innerText="NXT 프리마켓 요약";host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${d.nextrade_change||"-"} <span class="pill">${d.nextrade_session||"08:00~08:50"}</span></div><div class="smallmuted">${d.nextrade_basis||"기준 정보 -"}</div><div style="margin-top:18px" class="table-wrap"><table><tbody><tr><th style="width:180px">거래종목 수</th><td>${d.nextrade_issues||"-"}</td></tr><tr><th>거래량(주)</th><td>${d.nextrade_volume||"-"}</td></tr><tr><th>거래대금(원)</th><td>${d.nextrade_value||"-"}</td></tr></tbody></table></div><div class="note">${d.nextrade_note||"클릭 시 넥스트레이드 열기"}</div></div>`;host.style.height="430px";}
 function renderDoughconInfo(){title.innerText="PizzINT / DOUGHCON";host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">${d.doughcon_level||"DOUGHCON -"} <span class="pill">${d.doughcon_location||"ROUND HOUSE"}</span></div><div class="smallmuted">${d.doughcon_status||"INCREASE IN FORCE READINESS"}</div><div class="note" style="margin-top:18px">${d.doughcon_note||"클릭 시 PizzINT 열기"}</div><div class="links"><a class="btn" href="https://www.pizzint.watch/?utm_source=chatgpt.com" target="_blank" rel="noopener noreferrer">PizzINT 열기</a></div></div>`;host.style.height="430px";}
+function renderVrpChart(){
+  const rows=Array.isArray(d.vrp_chart)?d.vrp_chart:[];
+  title.innerText="Implied vs Realized Volatility";
+  host.style.height="430px";
+  if(!rows.length){host.innerHTML=`<div class="gauge-wrap"><div class="gauge-title">VRP 데이터 없음</div><div class="note">${d.vrp_note||"VRP 데이터를 불러오지 못했습니다."}</div></div>`;return;}
+  const series=[
+    {key:"vix",name:"VIX",color:"#f97316"},
+    {key:"spy_rv",name:"SPY 21D RV",color:"#60a5fa"},
+    {key:"vkospi",name:"VKOSPI",color:"#2dd4bf"},
+    {key:"kospi_rv",name:"KOSPI 21D RV",color:"#c084fc"}
+  ];
+  const width=920,height=330,pad={l:48,r:18,t:18,b:34};
+  const vals=[];
+  rows.forEach(r=>series.forEach(s=>{const v=Number(r[s.key]);if(!Number.isNaN(v))vals.push(v);}));
+  const min=Math.max(0,Math.floor(Math.min(...vals)-3));
+  const max=Math.ceil(Math.max(...vals)+3);
+  const x=i=>pad.l+(rows.length===1?0:i*(width-pad.l-pad.r)/(rows.length-1));
+  const y=v=>pad.t+(max-v)*(height-pad.t-pad.b)/(max-min);
+  const points=s=>rows.map((r,i)=>Number(r[s.key])).map((v,i)=>Number.isNaN(v)?null:`${x(i).toFixed(1)},${y(v).toFixed(1)}`).filter(Boolean).join(" ");
+  const grid=[0,.25,.5,.75,1].map(t=>{const yy=pad.t+t*(height-pad.t-pad.b);const val=max-t*(max-min);return `<line x1="${pad.l}" x2="${width-pad.r}" y1="${yy}" y2="${yy}" stroke="#1d2735"/><text x="10" y="${yy+4}" fill="#93a1b2" font-size="11">${val.toFixed(0)}</text>`;}).join("");
+  const lines=series.map(s=>`<polyline fill="none" stroke="${s.color}" stroke-width="2" points="${points(s)}"/>`).join("");
+  const legend=series.map((s,i)=>`<span style="display:inline-flex;align-items:center;gap:6px;margin-right:12px"><i style="width:10px;height:10px;border-radius:50%;background:${s.color};display:inline-block"></i>${s.name}</span>`).join("");
+  const first=rows[0]?.date||"-",last=rows[rows.length-1]?.date||"-";
+  host.innerHTML=`<div style="padding:10px 12px"><div class="smallmuted" style="margin-bottom:8px">${first} ~ ${last} · ${d.vrp_note||""}</div><svg viewBox="0 0 ${width} ${height}" style="width:100%;height:330px;display:block;background:#0b1017;border-radius:12px">${grid}<line x1="${pad.l}" x2="${pad.l}" y1="${pad.t}" y2="${height-pad.b}" stroke="#334155"/><line x1="${pad.l}" x2="${width-pad.r}" y1="${height-pad.b}" y2="${height-pad.b}" stroke="#334155"/>${lines}<text x="${pad.l}" y="${height-9}" fill="#93a1b2" font-size="11">${first}</text><text x="${width-pad.r-82}" y="${height-9}" fill="#93a1b2" font-size="11">${last}</text></svg><div class="smallmuted" style="margin-top:10px">${legend}</div><div class="note">USA VRP = VIX - SPY 21거래일 실현변동성, KRX VRP = VKOSPI - KOSPI 21거래일 실현변동성</div></div>`;
+}
 function renderTV(symbol,name){title.innerText=name+" 차트";host.innerHTML='<div class="tradingview-widget-container" style="height:100%;width:100%"><div class="tradingview-widget-container__widget"></div></div>';host.style.height="430px";const container=host.querySelector(".tradingview-widget-container");const script=document.createElement("script");script.type="text/javascript";script.async=true;script.src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js";script.text=JSON.stringify({autosize:true,symbol:symbol,interval:"D",timezone:"Asia/Seoul",theme:"dark",style:"1",locale:"kr",allow_symbol_change:true,calendar:false,hide_side_toolbar:false,support_host:"https://www.tradingview.com"});container.appendChild(script);}
-function activate(card){cards.forEach(c=>c.classList.remove("active"));card.classList.add("active");const symbol=card.dataset.symbol;const name=card.dataset.title||"차트";if(symbol==="FGI")renderGauge();else if(symbol==="OPTION")renderOptionInfo();else if(symbol==="NEXTRADE"){renderNextradeInfo();window.open('https://www.nextrade.co.kr/main.do','_blank');}else if(symbol==="FEDWATCH"){window.open('https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html','_blank');}else if(symbol==="DOUGHCON"){renderDoughconInfo();window.open('https://www.pizzint.watch/?utm_source=chatgpt.com','_blank');}else renderTV(symbol,name);}
+function activate(card){cards.forEach(c=>c.classList.remove("active"));card.classList.add("active");const symbol=card.dataset.symbol;const name=card.dataset.title||"차트";if(symbol==="FGI")renderGauge();else if(symbol==="OPTION")renderOptionInfo();else if(symbol==="VRP")renderVrpChart();else if(symbol==="NEXTRADE"){renderNextradeInfo();window.open('https://www.nextrade.co.kr/main.do','_blank');}else if(symbol==="FEDWATCH"){window.open('https://www.cmegroup.com/markets/interest-rates/cme-fedwatch-tool.html','_blank');}else if(symbol==="DOUGHCON"){renderDoughconInfo();window.open('https://www.pizzint.watch/?utm_source=chatgpt.com','_blank');}else renderTV(symbol,name);}
 cards.forEach(card=>card.addEventListener("click",()=>activate(card)));if(cards.length)activate(cards[0]);
 })();
 </script>

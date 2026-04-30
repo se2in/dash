@@ -6,6 +6,14 @@ import sys
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 
+def wait_before_exit():
+    if sys.stdin.isatty():
+        try:
+            input("엔터를 누르면 종료합니다...")
+        except EOFError:
+            pass
+
+
 def run(cmd: str, allow_fail: bool = False):
     print(f"\n[RUN] {cmd}")
     result = subprocess.run(
@@ -38,6 +46,7 @@ def main():
 
         # 0) 현재 git 저장소 위치 확인
         run("git rev-parse --show-toplevel")
+        run("git fetch origin", allow_fail=True)
 
         # 1) 대시보드 데이터 업데이트
         run(f'"{sys.executable}" update_dashboard.py')
@@ -69,7 +78,7 @@ def main():
                 print("[INFO] 이 경우는 보통 아래 둘 중 하나입니다.")
                 print("       1) 실제 파일 저장이 안 됨")
                 print("       2) 다른 폴더의 파일을 수정함")
-                input("엔터를 누르면 종료합니다...")
+                wait_before_exit()
                 return
             else:
                 raise RuntimeError("git commit 중 오류가 발생했습니다.")
@@ -79,14 +88,25 @@ def main():
         run("git log -1 --stat")
 
         # 7) GitHub로 푸시
-        run("git push origin main")
+        push_result = run("git push origin main", allow_fail=True)
+        push_output = (push_result.stdout or "") + "\n" + (push_result.stderr or "")
+        if push_result.returncode != 0 and (
+            "fetch first" in push_output.lower()
+            or "non-fast-forward" in push_output.lower()
+            or "rejected" in push_output.lower()
+        ):
+            print("\n[INFO] 원격 main에 새 커밋이 있어 먼저 병합 후 다시 푸시합니다.")
+            run("git pull --no-edit origin main")
+            run("git push origin main")
+        elif push_result.returncode != 0:
+            raise RuntimeError("git push 중 오류가 발생했습니다.")
 
         print("\n[DONE] 자동 업데이트 및 GitHub push 완료")
 
     except Exception as e:
         print(f"\n[ERROR] {e}")
 
-    input("엔터를 누르면 종료합니다...")
+    wait_before_exit()
 
 
 if __name__ == "__main__":
