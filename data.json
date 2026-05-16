@@ -7,14 +7,14 @@
   "dowjones_chg": "-1.07% vs prev close",
   "vix": "18.43",
   "vix_chg": "+6.78% vs prev close",
-  "gold": "4,543.60",
-  "gold_chg": "-2.88% vs prev close",
-  "oil": "101.16",
-  "oil_chg": "-0.01% vs prev close",
-  "btc": "79,116.11",
-  "btc_chg": "-2.39% vs prev close",
+  "gold": "4,555.80",
+  "gold_chg": "-2.61% vs prev close",
+  "oil": "105.42",
+  "oil_chg": "+4.20% vs prev close",
+  "btc": "78,706.16",
+  "btc_chg": "-2.89% vs prev close",
   "usdkrw": "1,497.76",
-  "usdkrw_chg": "+0.53% vs prev close",
+  "usdkrw_chg": "+0.30% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
   "fear_greed": "63",
@@ -27,7 +27,7 @@
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-05-16\n09:16\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-05-16\n15:44\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "0.00%",
   "nextrade_issues": "0",
@@ -1903,5 +1903,5 @@
     }
   ],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-05-16 09:18:16"
+  "updated_at": "2026-05-16 15:45:18"
 }
