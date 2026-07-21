@@ -1,33 +1,33 @@
 window.dashboardData = {
-  "sp500": "7,575.39",
-  "sp500_chg": "+0.42% vs prev close",
-  "nasdaq100": "29,825.11",
-  "nasdaq100_chg": "+0.33% vs prev close",
-  "dowjones": "52,637.01",
-  "dowjones_chg": "+0.29% vs prev close",
-  "vix": "15.03",
-  "vix_chg": "-5.11% vs prev close",
-  "gold": "4,128.90",
-  "gold_chg": "-0.04% vs prev close",
-  "oil": "71.51",
-  "oil_chg": "-0.79% vs prev close",
-  "btc": "63,872.81",
-  "btc_chg": "+1.08% vs prev close",
-  "usdkrw": "1,498.87",
-  "usdkrw_chg": "-0.30% vs prev close",
+  "sp500": "7,509.20",
+  "sp500_chg": "+0.89% vs prev close",
+  "nasdaq100": "29,155.18",
+  "nasdaq100_chg": "+1.93% vs prev close",
+  "dowjones": "52,224.64",
+  "dowjones_chg": "+0.74% vs prev close",
+  "vix": "17.05",
+  "vix_chg": "-8.58% vs prev close",
+  "gold": "4,084.80",
+  "gold_chg": "+1.86% vs prev close",
+  "oil": "84.62",
+  "oil_chg": "+1.67% vs prev close",
+  "btc": "66,243.00",
+  "btc_chg": "+1.55% vs prev close",
+  "usdkrw": "1,480.61",
+  "usdkrw_chg": "-0.46% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "49",
-  "fear_greed_label": "neutral",
-  "options_expiry": "2026-07-17",
-  "options_note": "월간 만기",
+  "fear_greed": "41",
+  "fear_greed_label": "fear",
+  "options_expiry": "2026-07-24",
+  "options_note": "주간 만기",
   "cpi_yoy": "-",
   "cpi_date": "-",
   "nfp_mom": "-",
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-07-11\n06:12\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-07-22\n07:29\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "0.00%",
   "nextrade_issues": "0",
@@ -37,66 +37,52 @@ window.dashboardData = {
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
   "fedwatch_date": "클릭 시 CME FedWatch 열기",
-  "doughcon_level": "DOUGHCON 4",
+  "doughcon_level": "DOUGHCON 3",
   "doughcon_location": "ROUND HOUSE",
-  "doughcon_status": "ELEVATED WATCH",
+  "doughcon_status": "INCREASE IN FORCE READINESS",
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
     {
-      "date": "2026-07-14",
-      "symbol": "BAC",
-      "company": "Bank of America Corporation",
-      "eps_estimate": "1.12",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-07-14",
-      "symbol": "C",
-      "company": "Citigroup, Inc.",
-      "eps_estimate": "2.71",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-07-14",
-      "symbol": "GS",
-      "company": "Goldman Sachs Group, Inc. (The)",
-      "eps_estimate": "14.51",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-07-14",
-      "symbol": "JPM",
-      "company": "JP Morgan Chase & Co.",
-      "eps_estimate": "5.79",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-07-15",
-      "symbol": "JNJ",
-      "company": "Johnson & Johnson",
-      "eps_estimate": "2.86",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-07-16",
-      "symbol": "NFLX",
-      "company": "Netflix, Inc.",
-      "eps_estimate": "0.79",
+      "date": "2026-07-22",
+      "symbol": "GOOGL",
+      "company": "Alphabet Inc.",
+      "eps_estimate": "2.89",
       "time": "AMC"
     },
     {
-      "date": "2026-07-16",
-      "symbol": "TSM",
-      "company": "Taiwan Semiconductor Manufactur",
-      "eps_estimate": "3.83",
-      "time": "BMO"
+      "date": "2026-07-22",
+      "symbol": "TSLA",
+      "company": "Tesla, Inc.",
+      "eps_estimate": "0.54",
+      "time": "AMC"
     },
     {
-      "date": "2026-07-16",
-      "symbol": "UNH",
-      "company": "UnitedHealth Group Incorporated",
-      "eps_estimate": "4.85",
-      "time": "BMO"
+      "date": "2026-07-23",
+      "symbol": "INTC",
+      "company": "Intel Corporation",
+      "eps_estimate": "0.22",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-07-29",
+      "symbol": "META",
+      "company": "Meta Platforms, Inc.",
+      "eps_estimate": "7.23",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-07-29",
+      "symbol": "MSFT",
+      "company": "Microsoft Corporation",
+      "eps_estimate": "4.24",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-07-29",
+      "symbol": "QCOM",
+      "company": "QUALCOMM Incorporated",
+      "eps_estimate": "2.23",
+      "time": "AMC"
     }
   ],
   "fnguide_reports": [],
@@ -1945,5 +1931,5 @@ window.dashboardData = {
     }
   ],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-07-11 06:13:48"
+  "updated_at": "2026-07-22 07:30:56"
 };
