@@ -1,23 +1,23 @@
 {
-  "sp500": "7,498.96",
-  "sp500_chg": "-0.14% vs prev close",
-  "nasdaq100": "28,998.10",
-  "nasdaq100_chg": "-0.54% vs prev close",
-  "dowjones": "52,218.58",
-  "dowjones_chg": "-0.01% vs prev close",
-  "vix": "16.64",
-  "vix_chg": "-2.40% vs prev close",
-  "gold": "4,127.30",
-  "gold_chg": "+1.38% vs prev close",
-  "oil": "88.20",
-  "oil_chg": "+3.87% vs prev close",
-  "btc": "65,991.33",
-  "btc_chg": "-0.77% vs prev close",
-  "usdkrw": "1,476.44",
-  "usdkrw_chg": "+0.10% vs prev close",
+  "sp500": "7,408.30",
+  "sp500_chg": "-1.21% vs prev close",
+  "nasdaq100": "28,454.81",
+  "nasdaq100_chg": "-1.87% vs prev close",
+  "dowjones": "51,711.65",
+  "dowjones_chg": "-0.97% vs prev close",
+  "vix": "18.70",
+  "vix_chg": "+12.38% vs prev close",
+  "gold": "4,052.00",
+  "gold_chg": "-2.29% vs prev close",
+  "oil": "92.21",
+  "oil_chg": "+6.20% vs prev close",
+  "btc": "65,105.20",
+  "btc_chg": "-1.51% vs prev close",
+  "usdkrw": "1,474.11",
+  "usdkrw_chg": "-0.38% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "43",
+  "fear_greed": "40",
   "fear_greed_label": "fear",
   "options_expiry": "2026-07-24",
   "options_note": "주간 만기",
@@ -27,7 +27,7 @@
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-07-23\n07:31\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-07-24\n07:30\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "0.00%",
   "nextrade_issues": "0",
@@ -43,24 +43,10 @@
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
     {
-      "date": "2026-07-23",
-      "symbol": "INTC",
-      "company": "Intel Corporation",
-      "eps_estimate": "0.22",
-      "time": "AMC"
-    },
-    {
       "date": "2026-07-29",
       "symbol": "META",
       "company": "Meta Platforms, Inc.",
       "eps_estimate": "7.23",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-29",
-      "symbol": "MSFT",
-      "company": "Microsoft Corporation",
-      "eps_estimate": "4.24",
       "time": "AMC"
     },
     {
@@ -72,17 +58,24 @@
     },
     {
       "date": "2026-07-30",
-      "symbol": "AAPL",
-      "company": "Apple Inc.",
-      "eps_estimate": "1.89",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-30",
       "symbol": "AMZN",
       "company": "Amazon.com, Inc.",
       "eps_estimate": "1.82",
       "time": "AMC"
+    },
+    {
+      "date": "2026-07-31",
+      "symbol": "CVX",
+      "company": "Chevron Corporation",
+      "eps_estimate": "5.45",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-07-31",
+      "symbol": "XOM",
+      "company": "ExxonMobil Holdings Corporation",
+      "eps_estimate": "3.66",
+      "time": "BMO"
     }
   ],
   "fnguide_reports": [],
@@ -1931,5 +1924,5 @@
     }
   ],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-07-23 07:32:35"
+  "updated_at": "2026-07-24 07:32:01"
 }
