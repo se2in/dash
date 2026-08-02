@@ -1,25 +1,25 @@
 {
-  "sp500": "7,413.18",
-  "sp500_chg": "+0.02% vs prev close",
-  "nasdaq100": "28,039.21",
-  "nasdaq100_chg": "-0.32% vs prev close",
-  "dowjones": "52,210.08",
-  "dowjones_chg": "+0.51% vs prev close",
-  "vix": "18.67",
-  "vix_chg": "+0.48% vs prev close",
-  "gold": "4,075.80",
-  "gold_chg": "+0.20% vs prev close",
-  "oil": "81.89",
-  "oil_chg": "-8.31% vs prev close",
-  "btc": "64,012.35",
-  "btc_chg": "-2.03% vs prev close",
-  "usdkrw": "1,464.92",
-  "usdkrw_chg": "-0.62% vs prev close",
+  "sp500": "7,489.72",
+  "sp500_chg": "+0.70% vs prev close",
+  "nasdaq100": "28,274.20",
+  "nasdaq100_chg": "+0.60% vs prev close",
+  "dowjones": "52,485.03",
+  "dowjones_chg": "+0.53% vs prev close",
+  "vix": "15.99",
+  "vix_chg": "-6.44% vs prev close",
+  "gold": "4,120.60",
+  "gold_chg": "+1.77% vs prev close",
+  "oil": "81.28",
+  "oil_chg": "-4.00% vs prev close",
+  "btc": "63,275.85",
+  "btc_chg": "+0.82% vs prev close",
+  "usdkrw": "1,437.12",
+  "usdkrw_chg": "+1.16% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "40",
+  "fear_greed": "42",
   "fear_greed_label": "fear",
-  "options_expiry": "2026-07-31",
+  "options_expiry": "2026-08-07",
   "options_note": "주간 만기",
   "cpi_yoy": "-",
   "cpi_date": "-",
@@ -27,70 +27,21 @@
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-07-28\n07:51\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-08-03\n08:14\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
-  "nextrade_change": "0.00%",
-  "nextrade_issues": "0",
-  "nextrade_volume": "0",
-  "nextrade_value": "0",
+  "nextrade_change": "-1.71%",
+  "nextrade_issues": "575",
+  "nextrade_volume": "16,681,377",
+  "nextrade_value": "2,543,765,714,095",
   "nextrade_note": "* 등락률은 기준시점 대비 시가총액의 증감률임",
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
   "fedwatch_date": "클릭 시 CME FedWatch 열기",
-  "doughcon_level": "DOUGHCON 5",
+  "doughcon_level": "DOUGHCON 4",
   "doughcon_location": "ROUND HOUSE",
   "doughcon_status": "ELEVATED WATCH",
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
-    {
-      "date": "2026-07-29",
-      "symbol": "META",
-      "company": "Meta Platforms, Inc.",
-      "eps_estimate": "7.22",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-29",
-      "symbol": "MSFT",
-      "company": "Microsoft Corporation",
-      "eps_estimate": "4.24",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-29",
-      "symbol": "QCOM",
-      "company": "QUALCOMM Incorporated",
-      "eps_estimate": "2.23",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-30",
-      "symbol": "AAPL",
-      "company": "Apple Inc.",
-      "eps_estimate": "1.89",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-30",
-      "symbol": "AMZN",
-      "company": "Amazon.com, Inc.",
-      "eps_estimate": "1.82",
-      "time": "AMC"
-    },
-    {
-      "date": "2026-07-31",
-      "symbol": "CVX",
-      "company": "Chevron Corporation",
-      "eps_estimate": "5.57",
-      "time": "BMO"
-    },
-    {
-      "date": "2026-07-31",
-      "symbol": "XOM",
-      "company": "ExxonMobil Holdings Corporation",
-      "eps_estimate": "3.68",
-      "time": "BMO"
-    },
     {
       "date": "2026-08-03",
       "symbol": "PLTR",
@@ -110,6 +61,20 @@
       "symbol": "PFE",
       "company": "Pfizer, Inc.",
       "eps_estimate": "0.68",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-08-05",
+      "symbol": "DIS",
+      "company": "Walt Disney Company (The)",
+      "eps_estimate": "1.85",
+      "time": "BMO"
+    },
+    {
+      "date": "2026-08-05",
+      "symbol": "UBER",
+      "company": "Uber Technologies, Inc.",
+      "eps_estimate": "0.83",
       "time": "BMO"
     }
   ],
@@ -1959,5 +1924,5 @@
     }
   ],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-07-28 07:53:05"
+  "updated_at": "2026-08-03 08:15:22"
 }
