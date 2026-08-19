@@ -1,23 +1,23 @@
 window.dashboardData = {
-  "sp500": "7,745.06",
-  "sp500_chg": "-0.52% vs prev close",
-  "nasdaq100": "29,995.38",
-  "nasdaq100_chg": "-0.17% vs prev close",
-  "dowjones": "53,459.78",
-  "dowjones_chg": "-0.51% vs prev close",
-  "vix": "15.19",
-  "vix_chg": "+6.60% vs prev close",
-  "gold": "4,471.40",
-  "gold_chg": "+2.08% vs prev close",
-  "oil": "85.16",
-  "oil_chg": "+3.35% vs prev close",
-  "btc": "64,246.10",
-  "btc_chg": "+2.27% vs prev close",
-  "usdkrw": "1,416.40",
-  "usdkrw_chg": "-0.03% vs prev close",
+  "sp500": "7,707.98",
+  "sp500_chg": "+0.21% vs prev close",
+  "nasdaq100": "29,426.02",
+  "nasdaq100_chg": "-0.22% vs prev close",
+  "dowjones": "53,463.05",
+  "dowjones_chg": "+0.22% vs prev close",
+  "vix": "14.89",
+  "vix_chg": "-6.00% vs prev close",
+  "gold": "4,577.90",
+  "gold_chg": "+4.85% vs prev close",
+  "oil": "84.43",
+  "oil_chg": "-0.60% vs prev close",
+  "btc": "69,199.84",
+  "btc_chg": "+6.99% vs prev close",
+  "usdkrw": "1,386.56",
+  "usdkrw_chg": "-1.99% vs prev close",
   "yield_spread": "-",
   "yield_spread_chg": "-",
-  "fear_greed": "60",
+  "fear_greed": "56",
   "fear_greed_label": "greed",
   "options_expiry": "2026-08-21",
   "options_note": "월간 만기",
@@ -27,7 +27,7 @@ window.dashboardData = {
   "nfp_date": "-",
   "next_cpi": "-",
   "next_nfp": "-",
-  "nextrade_basis": "2026-08-18\n07:36\n기준 정보\nNXT 정규시장 체결기준",
+  "nextrade_basis": "2026-08-20\n07:27\n기준 정보\nNXT 정규시장 체결기준",
   "nextrade_session": "08:00~08:50",
   "nextrade_change": "0.00%",
   "nextrade_issues": "0",
@@ -37,9 +37,9 @@ window.dashboardData = {
   "fedwatch_hold": "동결 -",
   "fedwatch_hike": "변경 -",
   "fedwatch_date": "클릭 시 CME FedWatch 열기",
-  "doughcon_level": "DOUGHCON 3",
+  "doughcon_level": "DOUGHCON 4",
   "doughcon_location": "ROUND HOUSE",
-  "doughcon_status": "INCREASE IN FORCE READINESS",
+  "doughcon_status": "ELEVATED WATCH",
   "doughcon_note": "클릭 시 PizzINT 열기",
   "earnings": [
     {
@@ -48,6 +48,20 @@ window.dashboardData = {
       "company": "Walmart Inc.",
       "eps_estimate": "0.74",
       "time": "BMO"
+    },
+    {
+      "date": "2026-08-26",
+      "symbol": "CRM",
+      "company": "Salesforce, Inc.",
+      "eps_estimate": "3.27",
+      "time": "AMC"
+    },
+    {
+      "date": "2026-08-26",
+      "symbol": "NVDA",
+      "company": "NVIDIA Corporation",
+      "eps_estimate": "2.08",
+      "time": "AMC"
     }
   ],
   "fnguide_reports": [],
@@ -1896,5 +1910,5 @@ window.dashboardData = {
     }
   ],
   "fnguide_url": "https://comp.fnguide.com/SVO2/ASP/SVD_Report_Summary.asp?pGB=1&gicode=A005930&cID=&MenuYn=Y&ReportGB=&NewMenuID=901&stkGb=701",
-  "updated_at": "2026-08-18 07:38:46"
+  "updated_at": "2026-08-20 07:28:55"
 };
